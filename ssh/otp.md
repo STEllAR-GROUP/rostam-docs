@@ -2,7 +2,7 @@
 title: One Time Password (OTP) 
 description: How to setup OTP to enable two-factor authentication (2FA)
 published: true
-date: 2020-03-03T20:13:33.777Z
+date: 2020-03-03T20:42:04.786Z
 tags: 
 ---
 
@@ -46,7 +46,6 @@ The follow these steps to set up two-step authentication on Rostam:
 
 1. Login to Rostam with your username and password.  
 > You may be requiret to re-new your password it it is your first login.{.is-info}
-
 2. Obtain a Kerberos ticket by running `kinit`  
 In order to interact with underlying Identity Management system (IdM) in Rostam you should have a valid Kerberos ticket.
 ```bash
@@ -54,7 +53,6 @@ In order to interact with underlying Identity Management system (IdM) in Rostam 
 Password for user@ROSTAM.CCT.LSU.EDU: 
 [user@rostam0 ~]$
 ```
-
 3. Optionally, to verify that the login was successful, use the `klist` utility to display the cached TGT.
 ```bash
 [user@rostam0 ~]$ klist 
@@ -64,7 +62,6 @@ Default principal: user@ROSTAM.CCT.LSU.EDU
 Valid starting       Expires              Service principal
 03/02/2020 20:46:43  03/03/2020 20:46:39  krbtgt/ROSTAM.CCT.LSU.EDU@ROSTAM.CCT.LSU.EDU
 ```
-
 4. Now create an OTP Token by running `ipa otptoken-add`
 ```bash
 [user@rostam0 ~]$ ipa otptoken-add
