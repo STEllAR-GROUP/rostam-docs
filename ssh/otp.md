@@ -2,7 +2,7 @@
 title: One Time Password (OTP) 
 description: How to setup OTP to enable two-factor authentication (2FA)
 published: true
-date: 2020-03-03T20:42:41.114Z
+date: 2020-03-03T20:45:14.756Z
 tags: 
 ---
 
