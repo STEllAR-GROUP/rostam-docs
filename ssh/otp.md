@@ -2,7 +2,7 @@
 title: Two-step Authentication (2FA)
 description: How to setup OTP to enable two-factor authentication (2FA)
 published: true
-date: 2020-03-03T21:27:50.163Z
+date: 2020-03-03T21:38:20.442Z
 tags: 
 ---
 
@@ -17,7 +17,7 @@ All LSU services are required to enroll in multi-factor authentication. To compl
 
 The best way to in enable 2FA is to use your smart phone and install a third-party code generator app. You can also install some of these apps on your desktop.
 
-### Requirement
+## Requirement
 Before you get started, download one of the following authentication applications.
 - Authy 2-Factor Authentication
   - [Windows, MacOS](https://authy.com/download/)
@@ -41,7 +41,7 @@ Before you get started, download one of the following authentication application
   - [MacOS](https://keepassxc.org/download/#mac)
   - [Windows](https://keepassxc.org/download/#windows)
   
-### Setup
+## Setup
 The follow these steps to set up two-step authentication on Rostam:
 
 * Login to Rostam with your username and password.  
