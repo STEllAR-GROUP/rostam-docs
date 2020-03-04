@@ -2,18 +2,18 @@
 title: Two-Factor Authentication (2FA)
 description: How to setup OTP to enable two-factor authentication (2FA)
 published: true
-date: 2020-03-04T16:11:01.300Z
+date: 2020-03-04T16:11:54.756Z
 tags: 
 ---
 
-# Two-step Authentication
-Two-step authentication adds extra security by making it harder for someone else to log in to your account, especially if they steal your password.
+# Two-Factor Authentication
+Two-factor authentication adds extra security by making it harder for someone else to log in to your account, especially if they steal your password.
 
 When you enable two-step authentication, when someone attempts to log in to your account with your password, Rostam will also ask for a verification code from an authentication application for proof that it’s really you.
 
 All LSU services are required to enroll in multi-factor authentication. To comply with the enrollment, Rostam cluster enables the two-step authentication by default. It is your responsiblity to setup your OTP properly.
 
-## How do I enable two-step authentication?
+## How do I enable two-factor authentication?
 
 The best way to in enable 2FA is to use your smart phone and install a third-party code generator app. You can also install some of these apps on your desktop.
 
