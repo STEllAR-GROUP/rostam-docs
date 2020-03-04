@@ -1,8 +1,8 @@
 ---
-title: Two-step Authentication (2FA)
+title: Two-Factor Authentication (2FA)
 description: How to setup OTP to enable two-factor authentication (2FA)
 published: true
-date: 2020-03-03T21:38:20.442Z
+date: 2020-03-04T16:11:01.300Z
 tags: 
 ---
 
