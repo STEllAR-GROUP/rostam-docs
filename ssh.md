@@ -2,7 +2,7 @@
 title: Connetcing to Rostam
 description: How to connect via ssh to Rostam
 published: true
-date: 2020-03-23T19:09:21.887Z
+date: 2020-03-23T19:13:34.538Z
 tags: 
 ---
 
@@ -32,4 +32,4 @@ You can:
 - Configure SSH client to avoid typing username and hostname each time
 - Setup ProxyJump to access a compute node directly from your workstation.
 
-By following our [Advaced SSH Configuration](ssh/advanced_ssh) instructions.
+By following our [Advaced SSH Configuration](/ssh/advanced_ssh) instructions.
