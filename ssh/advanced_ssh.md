@@ -2,7 +2,7 @@
 title: Advaced SSH Configuration
 description: 
 published: true
-date: 2020-03-23T21:37:13.382Z
+date: 2020-03-23T22:57:44.431Z
 tags: 
 ---
 
@@ -180,5 +180,5 @@ $ ssh rostam
 then allocate bahram forone hour:
 
 ```bash
-$ scalloc -p v100 -N 1 -t 1:00:00
+$ salloc -p v100 -N 1 -t 1:00:00
 ```
