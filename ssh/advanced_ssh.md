@@ -2,7 +2,7 @@
 title: Advaced SSH Configuration
 description: 
 published: true
-date: 2020-03-23T21:31:59.581Z
+date: 2020-03-23T21:37:13.382Z
 tags: 
 ---
 
@@ -138,7 +138,7 @@ $ ssh rostam
 
 And you should be in, no question asked.
 
-# Connecting to a Compute Node Directly
+# Connecting Directly to a Compute Node
 
 Rostam uses its own internal network. The compute nodes are only connected to this internal network and can access the internet in one-direction through a firewall. The one-direction connection means any communication must start from inside, no one can initiate a communication from outside.
 
