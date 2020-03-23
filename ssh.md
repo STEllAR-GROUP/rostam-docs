@@ -2,7 +2,7 @@
 title: Connetcing to Rostam
 description: How to connect via ssh to Rostam
 published: true
-date: 2020-03-03T22:03:27.158Z
+date: 2020-03-23T19:09:21.887Z
 tags: 
 ---
 
@@ -21,3 +21,15 @@ localhost$ ssh -X myuser@rostam.cct.lsu.edu
 
 # Two-step Authentication
 Access to all LSU systems now requires Two-Factor Authentication (2FA). You can set up your two-factor authentication after you logged in for the first time. Please follow the instructions [Two-Factor Authentication Setup](/ssh/otp)
+
+# Advanced Connection Topics
+
+Connecting to the cluster by typing password and using the full hostname could be a bit obnoxious. 
+
+You can:
+
+- Setup Public Key Authentication to avoide typing password for each login.
+- Configure SSH client to avoid typing username and hostname each time
+- Setup ProxyJump to access a compute node directly from your workstation.
+
+By following our [Advaced SSH Configuration](ssh/advanced_ssh) instructions.
