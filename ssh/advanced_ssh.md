@@ -2,7 +2,7 @@
 title: Advaced SSH Configuration
 description: 
 published: true
-date: 2020-03-23T21:23:46.811Z
+date: 2020-03-23T21:31:59.581Z
 tags: 
 ---
 
@@ -170,10 +170,15 @@ $ ssh geev
 Access denied by pam_slurm_adopt: you have no active jobs on this node
 ```
 
-This is Slurm that prevents unauthorized, you can not login to a node unless you have an active job there and the solution is easy let's create job:
+This is Slurm that prevents unauthorized, you can not login to a node unless you have an active job there and the solution is easy let's create job on rostam:
 
+First login to rostam
 ```bash
-scalloc -p v100 -N 1 -t 1:00:00
+$ ssh rostam
 ```
 
-This command allocates bahram for one hour to the user.
+then allocate bahram forone hour:
+
+```bash
+$ scalloc -p v100 -N 1 -t 1:00:00
+```
