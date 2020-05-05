@@ -2,7 +2,7 @@
 title: Advaced SSH Configuration
 description: 
 published: true
-date: 2020-03-23T22:57:44.431Z
+date: 2020-05-05T12:57:44.431Z
 tags: 
 ---
 
@@ -43,9 +43,7 @@ The entire key generation process looks like this:
 
 ```bash
 $ ssh-keygen -t rsa -b 4096
-```
 
-```bash
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/tiger/.ssh/id_rsa): 
 Enter passphrase (empty for no passphrase): 
@@ -101,7 +99,7 @@ ssh myuser@rostam.cct.lsu.edu
 
 Now that we took care of the password let's automate the process as much as we can. The SSH client-side configuration file is named `config`, and it is stored in `.ssh` directory under user’s home directory. (same for Windows, Mac and Linux)
 
-The ~/.ssh directory is automatically created when the user runs the ssh command for the first time and this is the place we stored our keys in previus step. 
+The ~/.ssh directory is automatically created when the user runs the ssh command for the first time and this is the place we stored our keys in previus step.
 
 By default the SSH configuration file may not exist so you may need to create it.
 
@@ -116,6 +114,7 @@ $ chmod 600 ~/.ssh/config
 ```
 
 Now open the config file with editer of choice
+
 ```bash
 $ vim ~/.ssh/config
 ```
@@ -124,19 +123,30 @@ and add following config:
 
 ```ssh-config
 Host rostam
-	Hostname rostam.cct.lsu.edu
-  Port 22		# Default Port
-	User myuser
-	IdentityFile ~/.ssh/id_rsa  # Default Path
+Hostname rostam.cct.lsu.edu
+Port 22   # Default Port
+User myuser
+IdentityFile ~/.ssh/id_rsa  # Default Path
 ```
 
 Now go ahead and give it a try by using the `Host` option:
 
 ```bash
-$ ssh rostam
+ssh rostam
 ```
 
 And you should be in, no question asked.
+
+## Keeping SSH Connection Alive
+
+Many NAT firewalls drop idle sessions after a certain period of time to keep their trunks clean. Sometimes the interval between session drops is 24 hours, but on many commodity firewalls, connections are killed after as little as 300 seconds. To avoid having your SSH sessions become unresponsive after e.g. 5 minutes, add following lines to your the `.ssh/config` for rostam:
+
+```ssh-config
+ServerAliveInterval 300
+ServerAliveCountMax 2
+```
+
+These settings will make the SSH client to send a null packet to the server every 300 seconds (5 minutes), and give up if it doesn’t receive any response after 2 tries, at which point the connection is likely to have been discarded anyway.
 
 # Connecting Directly to a Compute Node
 
@@ -150,17 +160,17 @@ Open the `.ssh/config` file and create an entry for geev the same way you alread
 
 ```ssh-config
 Host rostam
-	Hostname rostam.cct.lsu.edu
-  Port 22		# Default Port
-	User myuser
-	IdentityFile ~/.ssh/id_rsa  # Default Path
-  
+Hostname rostam.cct.lsu.edu
+Port 22    # Default Port
+User myuser
+IdentityFile ~/.ssh/id_rsa  # Default Path
+
 Host geev
-	Hostname geev.rostam.cct.lsu.edu
-  Port 22		
-	User myuser
-	IdentityFile ~/.ssh/id_rsa 
-  ProxyJump rostam
+Hostname geev.rostam.cct.lsu.edu
+Port 22
+User myuser
+IdentityFile ~/.ssh/id_rsa
+ProxyJump rostam
 ```
 
 Now let's give our new configuration a try.
@@ -177,7 +187,7 @@ First login to rostam
 $ ssh rostam
 ```
 
-then allocate bahram forone hour:
+then allocate bahram for one hour:
 
 ```bash
 $ salloc -p v100 -N 1 -t 1:00:00
