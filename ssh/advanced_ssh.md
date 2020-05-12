@@ -2,11 +2,11 @@
 title: Advaced SSH Configuration
 description: 
 published: true
-date: 2020-05-05T12:57:44.431Z
+date: 2020-05-12T12:57:44.431Z
 tags: 
 ---
 
-# SSH Public Key Authentication
+## SSH Public Key Authentication
 
 Public key authentication is a way of logging into an SSH/SFTP account using a cryptographic key rather than a password.
 
@@ -14,26 +14,26 @@ Generating a key pair provides you with two long string of characters: a public 
 
 If you don't already have an SSH key, you must generate a new SSH key.
 
-## Generating a new SSH key
+### Generating a new SSH key
 
 - Open a terminal on your workstation
 - Create the RSA key pair
 
 ```bash
-$ ssh-keygen -t rsa -b 4096
+ssh-keygen -t rsa -b 4096
 ```
 
 - Store the keys and passphrase
 
 Once you have entered the Gen Key command, you will get a few more questions:
 
-```bash
+```output
 Enter file in which to save the key (/home/tiger/.ssh/id_rsa):
 ```
 
 You can press enter here, saving the file to the user home (in this case, my example user is called tiger).
 
-```bash
+```output
 Enter passphrase (empty for no passphrase):
 ```
 
@@ -45,9 +45,9 @@ The entire key generation process looks like this:
 $ ssh-keygen -t rsa -b 4096
 
 Generating public/private rsa key pair.
-Enter file in which to save the key (/home/tiger/.ssh/id_rsa): 
-Enter passphrase (empty for no passphrase): 
-Enter same passphrase again: 
+Enter file in which to save the key (/home/tiger/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
 Your identification has been saved in /home/tiger/.ssh/id_rsa.
 Your public key has been saved in /home/tiger/.ssh/id_rsa.pub.
 The key fingerprint is:
@@ -66,7 +66,7 @@ The key's randomart image is:
 +-----------------+
 ```
 
-## Copying the Public Key
+### Copying the Public Key
 
 Once the key pair is generated, it’s time to place the public key on Rostam.
 
@@ -79,14 +79,15 @@ ssh-copy-id myuser@rostam.cct.lsu.edu
 If you installed the ssh key on different location in previus step you can point to it by `-i [path-to-key]` option.
 
 > Note:  If you are a Mac user, ssh-copy-id will not be installed on your machine. You can, however, install it using Homebrew:
-> ```bash
+>
+>```bash
 > $ brew install ssh-copy-id
-> ```
+>```
 
 Alternatively, you can paste in the keys using SSH:
 
 ```bash
-$ cat ~/.ssh/id_rsa.pub | ssh myuser@rostam.cct.lsu.edu "cat >> ~/.ssh/authorized_keys"
+cat ~/.ssh/id_rsa.pub | ssh myuser@rostam.cct.lsu.edu "cat >> ~/.ssh/authorized_keys"
 ```
 
 Now you should be able to login to Rostam without typing password. Give it a try by:
@@ -95,7 +96,7 @@ Now you should be able to login to Rostam without typing password. Give it a try
 ssh myuser@rostam.cct.lsu.edu
 ```
 
-# Using the SSH Config File
+## Using the SSH Config File
 
 Now that we took care of the password let's automate the process as much as we can. The SSH client-side configuration file is named `config`, and it is stored in `.ssh` directory under user’s home directory. (same for Windows, Mac and Linux)
 
@@ -104,19 +105,19 @@ The ~/.ssh directory is automatically created when the user runs the ssh command
 By default the SSH configuration file may not exist so you may need to create it.
 
 ```bash
-$ touch ~/.ssh/config
+touch ~/.ssh/config
 ```
 
 The SSH client is peculiarly picky about its config file permissions. This file must be readable and writable only by the user, and not accessible by others:
 
 ```bash
-$ chmod 600 ~/.ssh/config
+chmod 600 ~/.ssh/config
 ```
 
 Now open the config file with editer of choice
 
 ```bash
-$ vim ~/.ssh/config
+vim ~/.ssh/config
 ```
 
 and add following config:
@@ -137,7 +138,7 @@ ssh rostam
 
 And you should be in, no question asked.
 
-## Keeping SSH Connection Alive
+### Keeping SSH Connection Alive
 
 Many NAT firewalls drop idle sessions after a certain period of time to keep their trunks clean. Sometimes the interval between session drops is 24 hours, but on many commodity firewalls, connections are killed after as little as 300 seconds. To avoid having your SSH sessions become unresponsive after e.g. 5 minutes, add following lines to your the `.ssh/config` for rostam:
 
@@ -148,7 +149,7 @@ ServerAliveCountMax 2
 
 These settings will make the SSH client to send a null packet to the server every 300 seconds (5 minutes), and give up if it doesn’t receive any response after 2 tries, at which point the connection is likely to have been discarded anyway.
 
-# Connecting Directly to a Compute Node
+## Connecting Directly to a Compute Node
 
 Rostam uses its own internal network. The compute nodes are only connected to this internal network and can access the internet in one-direction through a firewall. The one-direction connection means any communication must start from inside, no one can initiate a communication from outside.
 
@@ -183,12 +184,13 @@ Access denied by pam_slurm_adopt: you have no active jobs on this node
 This is Slurm that prevents unauthorized, you can not login to a node unless you have an active job there and the solution is easy let's create job on rostam:
 
 First login to rostam
+
 ```bash
-$ ssh rostam
+ssh rostam
 ```
 
 then allocate bahram for one hour:
 
 ```bash
-$ salloc -p v100 -N 1 -t 1:00:00
+salloc -p v100 -N 1 -t 1:00:00
 ```
