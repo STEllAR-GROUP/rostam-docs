@@ -82,7 +82,7 @@ If you installed the ssh key on different location in previus step you can point
 >
 >```bash
 > $ brew install ssh-copy-id
->```
+>```{.is-info}
 
 Alternatively, you can paste in the keys using SSH:
 
