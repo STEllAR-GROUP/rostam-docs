@@ -2,7 +2,7 @@
 title: Advaced SSH Configuration
 description: 
 published: true
-date: 2020-05-12T12:57:44.431Z
+date: 2020-05-13T14:32:27.273Z
 tags: 
 ---
 
@@ -82,7 +82,8 @@ If you installed the ssh key on different location in previus step you can point
 >
 >```bash
 > $ brew install ssh-copy-id
->```{.is-info}
+>```
+{.is-info}
 
 Alternatively, you can paste in the keys using SSH:
 
