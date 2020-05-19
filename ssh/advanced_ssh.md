@@ -1,9 +1,9 @@
 ---
 title: Advaced SSH Configuration
-description: 
+description:
 published: true
 date: 2020-05-13T14:32:27.273Z
-tags: 
+tags:
 ---
 
 ## SSH Public Key Authentication
@@ -83,7 +83,6 @@ If you installed the ssh key on different location in previus step you can point
 >```bash
 > $ brew install ssh-copy-id
 >```
-{.is-info}
 
 Alternatively, you can paste in the keys using SSH:
 

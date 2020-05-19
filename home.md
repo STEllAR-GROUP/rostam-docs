@@ -2,8 +2,13 @@
 title: Rostam 2.0
 description: This is a Wiki on how to use the new Rostam cluster
 published: true
-date: 2020-03-03T19:04:15.718Z
+date: 2020-05-13T19:04:15.718Z
 tags: 
 ---
 
 > This document leaves a lot to be desired!!{.is-warning}
+
+> Documentation is being worked on! Some pages may be incomplete or not exist yet. Help us expand it by contributing to our Github [repo](https://github.com/STEllAR-GROUP/rostam-docs)
+>
+> Please report any issue about documentation [here](https://github.com/STEllAR-GROUP/rostam-docs/issues)
+{.is-info}
