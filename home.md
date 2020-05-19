@@ -2,7 +2,7 @@
 title: Rostam 2.0
 description: This is a Wiki on how to use the new Rostam cluster
 published: true
-date: 2020-05-13T19:04:15.718Z
+date: 2020-05-19T15:50:13.520Z
 tags: 
 ---
 
