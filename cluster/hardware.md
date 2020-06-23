@@ -2,12 +2,12 @@
 title: Hardware Architecture
 description: 
 published: true
-date: 2020-06-23T00:48:21.027Z
+date: 2020-06-23T01:44:37.731Z
 tags: 
 editor: markdown
 ---
 
-Rostam Cluster Consists of 45 nodes ranging from Intel's Skylake with Nvidia V100 to Raspberry Pi.
+Rostam Cluster Consists of 49 nodes ranging from Intel's Skylake with Nvidia V100 to Raspberry Pi.
 
 ## Hardware Summary
 
@@ -29,3 +29,16 @@ Rostam Cluster Consists of 45 nodes ranging from Intel's Skylake with Nvidia V10
 
 > All nodes have Hyper-threading off.
 {.is-info}
+
+## Network
+
+Rostam uses a 25Gb switch as its main network system. All nodes except Marvin and Raspberry PIs are connected to the main switch. Marvin is a blade system and has its own 1Gb switch, which is connected with a 10Gb uplink to the main switch.
+
+### Infiniband
+
+Rostam also has a FDR(56Gbps) infiniband connectivity with fat tree topology. (In human language it means the two switches are connected with a 160Gbps connection).
+
+There is no TCP/IP stack and therefore IP address on infiniband ports. If you want your application to use infiniband network, it should utilize `ibverbs` library and if your application uses TCP/IP, it is not using infiniband, it is using the ethernet switch. We intentionally configured the cluster this way to distinguish between to network. MPI understands this seperation and uses proper libraries when available.
+
+## Storage
+DrStrange is our main storage server configured with ZFS. It uses ten 14TB 7.2K 12Gb SAS disks devided in two RAID-Z1 VDEVs, with two 16GB PCIe Intel Optane for write buffer.
