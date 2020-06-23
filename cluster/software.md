@@ -2,7 +2,7 @@
 title: Software Library
 description: 
 published: true
-date: 2020-06-23T16:22:59.740Z
+date: 2020-06-23T17:49:57.253Z
 tags: 
 editor: markdown
 ---
@@ -109,3 +109,21 @@ Help text is available for both individual modules and the module system itself:
 module help blaze     # show help text for software package blaze
 module help         	# show help text for the module system itself
 ```
+
+## Python Library
+CentOS 8 provides Python 3.6 which is installed on the cluster. Also we always provide a newer version of Python in our module system:
+
+```bash
+$ module load python
+$ python3 --version
+Python 3.8.2
+```
+
+This provides you a minimal Python library. You can install any additional package with `pip`.
+
+``bash
+pip install numpy
+```
+> `pip` on Rostam is configured to always use `--user` when invoked by users. All packages will installed in your home directory. You can install, remove, upgrade and downgrade packages when you choose with no worries.{.is-info}
+
+> Rostam does not have any Python 2 library.{.is-warning}
