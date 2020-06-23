@@ -2,7 +2,7 @@
 title: Compiling Your Program
 description: 
 published: true
-date: 2020-06-23T22:41:08.180Z
+date: 2020-06-23T22:43:20.955Z
 tags: 
 editor: markdown
 ---
