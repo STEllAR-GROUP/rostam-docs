@@ -2,7 +2,7 @@
 title: Advaced SSH Configuration
 description: 
 published: true
-date: 2020-06-23T23:51:44.652Z
+date: 2020-06-23T23:56:02.847Z
 tags: 
 editor: markdown
 ---
@@ -79,7 +79,7 @@ ssh-copy-id myuser@rostam.cct.lsu.edu
 
 If you installed the ssh key on different location in previus step you can point to it by `-i [path-to-key]` option.
 
-> Note:  If you are a Mac user, ssh-copy-id will not be installed on your machine. You can, however, install it using Homebrew: `brew install ssh-copy-id`{.is-info}
+> Note:  If you are a Mac user, ssh-copy-id will not be installed on your machine. You can, however, install it using Homebrew: `brew install ssh-copy-id` {.is-info}
 
 Alternatively, you can paste in the keys using SSH:
 
