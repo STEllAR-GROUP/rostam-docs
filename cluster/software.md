@@ -2,7 +2,7 @@
 title: Software Library
 description: 
 published: true
-date: 2020-06-23T17:49:57.253Z
+date: 2020-06-23T17:50:56.810Z
 tags: 
 editor: markdown
 ---
@@ -121,9 +121,10 @@ Python 3.8.2
 
 This provides you a minimal Python library. You can install any additional package with `pip`.
 
-``bash
+```bash
 pip install numpy
 ```
+
 > `pip` on Rostam is configured to always use `--user` when invoked by users. All packages will installed in your home directory. You can install, remove, upgrade and downgrade packages when you choose with no worries.{.is-info}
 
 > Rostam does not have any Python 2 library.{.is-warning}
