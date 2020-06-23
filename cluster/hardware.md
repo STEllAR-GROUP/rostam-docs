@@ -1,8 +1,8 @@
 ---
-title: Hardware Architecture
+title: Hardware Resources
 description: 
 published: true
-date: 2020-06-23T10:44:20.043Z
+date: 2020-06-23T12:04:20.043Z
 tags: 
 editor: markdown
 ---
