@@ -1,9 +1,10 @@
 ---
 title: Advaced SSH Configuration
-description:
+description: 
 published: true
-date: 2020-05-13T14:32:27.273Z
-tags:
+date: 2020-06-23T23:49:49.630Z
+tags: 
+editor: markdown
 ---
 
 ## SSH Public Key Authentication
@@ -78,11 +79,8 @@ ssh-copy-id myuser@rostam.cct.lsu.edu
 
 If you installed the ssh key on different location in previus step you can point to it by `-i [path-to-key]` option.
 
-> Note:  If you are a Mac user, ssh-copy-id will not be installed on your machine. You can, however, install it using Homebrew:
->
->```bash
-> $ brew install ssh-copy-id
->```
+> Note:  If you are a Mac user, ssh-copy-id will not be installed on your machine. You can, however, install it using Homebrew: `brew install ssh-copy-id`
+{.is-info}
 
 Alternatively, you can paste in the keys using SSH:
 
