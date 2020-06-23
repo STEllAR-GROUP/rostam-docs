@@ -2,7 +2,7 @@
 title: Software Library
 description: 
 published: true
-date: 2020-06-23T04:34:35.092Z
+date: 2020-06-23T16:22:59.740Z
 tags: 
 editor: markdown
 ---
@@ -21,9 +21,91 @@ The base system on the cluster is:
 |Name     |Version   |
 |---------|:--------:|
 |CentOS   |8.2.2004  |
+|Kernel   |4.18      |
 |gcc      |8.3       |
 |glibc    |2.28      |
 |binutils |2.30      |
 
 ## Software Library
 
+Many software libraris and application are provided by official CentOS repositories or supporded thrid-parties. Also we have compiled many more libraries to satisfy the needs of developers and researchers. In general softwares available on Rostam could be divided in three categories:
+
+- Software provided by official repositories. These softwares are available throughout the system and usually require no special configuration to use. (i.e. fish, singularity, vim ...)
+- Softwares compiled by admins using default compiler on the system. To used these libraries you should load the appropriate [Environment Module](#Environment-Module). (i.e. cmake, gcc, clang ...)
+- Softwares that are compiled with specific compilers or flags, to use those software aside from loading the modules you must also load the dependencies. To avoid any confusion, the modules for these applications are hidden and only appear when the prerequisite module is loaded. You can use module spider to locate such applications (i.e. boost-clang, boost-gcc ...)
+
+## Environment Module
+Rostam uses `Lmod`, a module system developed and maintained at TACC, to manage your environment so you have access to the software packages and versions that you need to conduct your research. Loading a module amounts to choosing a specific package from among available alternatives:
+
+```bash
+module load clang          # load the default Clang compiler v10.0.0
+module load clang/9.0.1    # load a specific version of the Clang compiler
+```
+
+A module does its job by defining or modifying environment variables (and sometimes aliases and functions). For example, a module may prepend appropriate paths to `$PATH` and `$LD_LIBRARY_PATH` so that the system can find the executables and libraries associated with a given software package. The module creates the illusion that the system is installing software for your personal use. Unloading a module reverses these changes and creates the illusion that the system just uninstalled the software:
+
+```bash
+module load hwloc      # defines hwloc-related env vars; modifies others
+module unload hwloc    # undoes changes made by load
+```
+
+The module system does more, however. When you load a given module, the module system can automatically replace or deactivate confilicing modules to ensure the packages you have loaded are compatible with each other. In the example below, the module system automatically unloads one compiler when you load another, It also reloads the dependent library when available:
+
+```bash
+$ module load gcc/9.3.0
+$ module load boost/1.72.0-release
+$ module load clang/9.0.1 
+
+Lmod is automatically replacing "gcc/9.3.0" with "clang/9.0.1".
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) boost/1.72.0-release
+
+```
+
+To see the modules you currently have loaded:
+
+```bash
+module list
+```
+
+To see all modules that you can load right now because they are compatible with the currently loaded modules:
+
+```bash
+module avail
+```
+
+To see all installed modules, even if they are not currently available because they are incompatible with your currently loaded modules:
+
+```bash
+module spider   # list all modules, even those not available to load
+```
+
+To filter your search:
+
+```bash
+module spider boost             				# all modules with names containing 'boost'
+module spider sundials/1.72.0-release   # additional details on a specific module
+```
+
+You can save a collection of modules as a personal default collection that will load every time you log into Frontera. To do so, load the modules you want in your collection, then execute:
+
+```bash
+module save    # save the currently loaded collection of modules 
+```
+
+Two commands make it easy to return to a known, reproducible state:
+
+```bash
+module reset   		# load the system default collection of modules
+module restore 		# load your personal default collection of modules
+```
+
+On Rostam, the command `module reset` is equivalent to `module purge; module load Rostam2`. It's a safer, easier way to get to a known baseline state than issuing the two commands separately.
+
+Help text is available for both individual modules and the module system itself:
+
+```bash
+module help blaze     # show help text for software package blaze
+module help         	# show help text for the module system itself
+```
