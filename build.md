@@ -2,7 +2,7 @@
 title: Compiling Your Program
 description: 
 published: true
-date: 2020-06-23T22:49:17.582Z
+date: 2020-06-24T00:33:50.798Z
 tags: 
 editor: markdown
 ---
@@ -29,6 +29,8 @@ module load boost cmake git papi hwloc
 ```
 
 > It is a good practice that from early on, you organize your *home* and *work* directtories. You are allocated 50GB in `$HOME` and 1TB in `$WORK` directories. There is no performance difference between the two. Keep the important codes and data in *home* and move large libraries and data to *work*.{.is-success}
+
+> Use `cdw` command to quickly switch to your work directory. {.is-success}
 
 Let's assume you want to use *work* directory and you want to keep the source files in `source` directory and compiled programs in a directory named `apps`. First we create those directories and clone HPX in `source`:
 
