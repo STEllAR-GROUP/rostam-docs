@@ -2,7 +2,7 @@
 title: Software Library
 description: 
 published: true
-date: 2020-06-23T17:50:56.810Z
+date: 2020-06-24T12:35:58.211Z
 tags: 
 editor: markdown
 ---
@@ -102,6 +102,14 @@ module restore 		# load your personal default collection of modules
 ```
 
 On Rostam, the command `module reset` is equivalent to `module purge; module load Rostam2`. It's a safer, easier way to get to a known baseline state than issuing the two commands separately.
+
+You can also give a name to your saved collection and keep multipe saved collections:
+
+```bash
+module save c9b72r
+module savelist
+module restore c9b72r
+```
 
 Help text is available for both individual modules and the module system itself:
 
