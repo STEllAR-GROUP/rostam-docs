@@ -2,7 +2,7 @@
 title: Compiling Your Program
 description: 
 published: true
-date: 2020-06-24T00:33:50.798Z
+date: 2020-06-24T03:42:37.369Z
 tags: 
 editor: markdown
 ---
@@ -63,9 +63,9 @@ Let's go over the command options one by one:
 
 The `DHPX_WITH_THREAD_IDLE_RATES=ON` is an ontional flag but a good one to have. It is an example of HPX options, built-in on its cmake configuration. We placed it here to show the process.
 
-The `-DCMAKE_INSTALL_PREFIX=` flag sets the installation destination. Here we chose `$WORK/apps/hpx-` `+` *today's date*.
+The `-DCMAKE_INSTALL_PREFIX=` flag sets the installation destination. Here we chose `$WORK/apps/hpx-` `+` `today's date`.
 
->It's a good practice to note the date you cloned the master to keep a record of how old your library is. If found it annoyting to keep the track of your libraries path, you can create a soft link to hide the dates; `ln -s $WORK/apps/hpx-$(date +'%Y%m%d') $WORK/apps/hpx`
+>It's a good practice to note the date you cloned the master to keep a record of how old your library is. If found it annoyting to keep the track of your libraries path, you can create a soft link to hide the dates when using the library; `ln -s $WORK/apps/hpx-$(date +'%Y%m%d') $WORK/apps/hpx`
 {.is-success}
 
 If everyting goes according to the plan, cmake should populate your build directory (your current directory) with necessary makefiles to build HPX. Next step would be to invoke the `make` command to compile HPX, here we instruct make to use 12 concurrent jobs as an example:
