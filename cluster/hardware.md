@@ -2,7 +2,7 @@
 title: Hardware Resources
 description: 
 published: true
-date: 2020-06-23T12:04:20.043Z
+date: 2020-06-26T17:47:46.406Z
 tags: 
 editor: markdown
 ---
@@ -30,15 +30,11 @@ Rostam Cluster Consists of 49 nodes ranging from Intel's Skylake with Nvidia V10
 > All nodes have Hyper-threading off.
 {.is-info}
 
-## Network
+## Interconnect
 
-Rostam uses a 25Gb switch as its main network system. All nodes except Marvin and Raspberry PIs are connected to the main switch. Marvin is a blade system and has its own 1Gb switch, which is connected with a 10Gb uplink to the main switch.
+As the msn tool of communication between the nodes, Rostam uses FDR(56Gbps) infiniband connectivity with fat tree topology. (In human language it means the two switches are connected with a 160Gbps connection).
 
-### Infiniband
-
-Rostam also has a FDR(56Gbps) infiniband connectivity with fat tree topology. (In human language it means the two switches are connected with a 160Gbps connection).
-
-There is no TCP/IP stack and therefore IP address on infiniband ports. If you want your application to use infiniband network, it should utilize `ibverbs` library. If your application uses TCP/IP, it is not using infiniband, it is using the ethernet switch. We intentionally configured the cluster this way to distinguish between the two networks. MPI understands this seperation and uses proper libraries when available.
+Rostam also has a 25Gb SFP28 ethernet switch and a 1Gb copper cable ehternet switch to use on the nodes withouth Inifiniband connectivity.
 
 ## Storage
 DrStrange is our main storage server configured with ZFS. It uses ten 14TB 7.2K 12Gb SAS disks devided into two RAID-Z1 VDEVs, with two 16GB PCIe Intel Optane for write buffer.
