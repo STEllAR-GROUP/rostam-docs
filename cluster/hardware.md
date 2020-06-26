@@ -2,7 +2,7 @@
 title: Hardware Resources
 description: 
 published: true
-date: 2020-06-26T17:47:46.406Z
+date: 2020-06-26T17:48:28.557Z
 tags: 
 editor: markdown
 ---
@@ -21,6 +21,7 @@ Rostam Cluster Consists of 49 nodes ranging from Intel's Skylake with Nvidia V10
 |Carson     |20 (Ivy Bridge)    |128 GB |2 x K80        |Compute|1      |
 |Reno       |20 (Ivy Bridge)    |128 GB |1 x K40        |Compute|1      |
 |RPi4       |4 (Cortex-A72)     |4 GB   |None           |Compute|4      |
+|RPi3+      |4 (Cortex-A53)     |1 GB   |None           |Compute|4      |
 |RPi3       |4 (Cortex-A53)     |1 GB   |None           |Compute|4      |
 |AncientOne |16 (Sandy Bridge)  |64 GB  |None           |Storage|1      |
 |DrStrange  |16 (Haswell)       |64 GB  |None           |Storage|1      |
