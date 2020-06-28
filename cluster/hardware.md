@@ -2,7 +2,7 @@
 title: Hardware Resources
 description: 
 published: true
-date: 2020-06-28T22:55:00.392Z
+date: 2020-06-28T23:59:34.721Z
 tags: 
 editor: markdown
 ---
