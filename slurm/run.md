@@ -2,7 +2,7 @@
 title: Running Jobs
 description: 
 published: true
-date: 2020-06-29T17:42:42.695Z
+date: 2020-08-20T21:01:58.258Z
 tags: 
 editor: markdown
 ---
@@ -227,3 +227,87 @@ medusa03
 4.18.0-193.6.3.el8_2.x86_64
 ```
 > Options supplied on the command line would override any options specified within the script. {.is-info}
+
+## Running MPI Jobs
+
+There three ways to launch an MPI applicatioin using SLURM:
+1. Slurm directly launches the tasks and performs initialization of communications through the PMI2 or PMIx APIs. (Supported by most modern MPI implementations.)
+1. Slurm creates a resource allocation for the job and then `mpirun` launches tasks using Slurm's infrastructure (older versions of OpenMPI).
+1. Slurm creates a resource allocation for the job and then mpirun launches tasks using some mechanism other than Slurm, such as SSH (Not recommended).
+
+> For more information look [here](https://slurm.schedmd.com/mpi_guide.html). {.is-info}
+
+### PMI/MPIx API
+
+On Rostam the SLURM is compiled with support for both `PMI2` and `PMIx` API
+
+````bash
+$ srun --mpi=list
+srun: MPI types are...
+srun: none
+srun: pmi2
+srun: pmix
+srun: pmix_v3
+srun: cray_shasta
+````
+
+> In Rostam's `slurm.conf` the default MPI is set as `MpiDefault=pmix_v3`
+> Users can override the default API by `srun --mpi=` or equivalent environment variable `SLURM_MPI_TYPE` {.is-success}
+
+### OpenMPI
+Starting with OpenMPI version 3.1, PMIx version 2 is natively supported. To launch Open MPI application using PMIx version 2 the `--mpi=pmix_v2` option must be specified on the srun command line. OpenMPI version 4.0, adds support for PMIx version 3 and is invoked in the same way, with `--mpi=pmix_v3`.
+
+Also on Rostam, the OpenMPI is configured with _--with-pmi_. To use the PMI API the option `--mpi=pmi2` or `--mpi=pmi2_v2` must be specified on the srun command line.
+
+In summary, you can use:
+
+````bash
+salloc -n 20 sh   # allocates 20 cores and spawns shell for job
+srun my_mpi_app
+exit   # exits shell spawned by initial salloc command
+````
+
+Or much better:
+
+````bash
+srun -n 20 my_mpi_app
+````
+
+To use the PMI2 support
+
+````bash
+srun --mpi=pmi2 -n 20 my_mpi_app
+````
+
+
+To use the PMIx support
+
+````bash
+srun --mpi=pmix -n 20 my_mpi_app
+````
+
+### MPICH2
+
+MPICH2 jobs can be launched using the `srun` command using pmi.
+
+````bash
+mpicc -lpmi2 ...
+srun --mpi=pmi2 -n 20 my_mpi_app
+````
+
+### Raspberry PI
+
+SLURM provided by Ubuntu Server on Raspberry PI does not support PMIx. Since the default MPI is `pmix_v3` on entire cluster, launching any job on Raspberry PI will fail unless you explicitly specify a supported MPI.
+ 
+````bash
+rpi4-64-00:~$ srun --mpi=list
+srun: MPI types are...
+srun: none
+srun: openmpi
+srun: pmi2
+````
+
+````bash
+$ srun --mpi=none -p rpi4-64 hostname
+rpi4-64-01.rostam.cct.lsu.edu
+````
