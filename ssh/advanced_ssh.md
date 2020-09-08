@@ -1,5 +1,5 @@
 ---
-title: Advaced SSH Configuration
+title: Advanced SSH Configuration
 description: 
 published: true
 date: 2020-06-23T23:56:02.847Z
