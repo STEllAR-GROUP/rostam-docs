@@ -2,9 +2,10 @@
 title: Compiling Your Program
 description: 
 published: true
-date: 2020-06-24T03:42:37.369Z
 tags: 
 editor: markdown
+date: 2023-07-13T15:15:00.000Z
+dateCreated: 2020-05-19T15:50:13.520Z
 ---
 
 Building a software is the process of producing a machine executable code from source files. The simplest form of it, is a one-line call to the compiler. But  more commonly, on Linux systems a [makefile](http://www.gnu.org/software/make/manual/make.html) is used to build the code systematically. However more increasingly the larger projects choose to use a multi-step automated build system managed by tools like [autotools](http://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html) or [cmake](https://cmake.org/). 
@@ -18,7 +19,7 @@ The first setup is to setup your development environment by loading appropriate 
 Loading the compiler:
 
 ```bash
-module load clang		# Load default version of clang
+module load llvm		# Load default version of llvm/clang
 # This set all variable and flags necessary to build HPX
 ```
 
@@ -87,5 +88,3 @@ $ cd $WORK/apps/hpx-$(date +'%Y%m%d')
 $ ./bin/hello_world_1
 Hello World!
 ```
-
-## Building Phylanx on Rostam

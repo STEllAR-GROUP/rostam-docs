@@ -1,9 +1,10 @@
 ---
-title: Rostam 2.0
+title: Rostam 2.4
 description: This is a Wiki on how to use the new Rostam cluster
 published: true
-date: 2020-05-19T15:50:13.520Z
-tags: 
+date: 2023-07-13T15:15:00.000Z
+tags:
+dateCreated: 2020-05-19T15:50:13.520Z
 ---
 
 > This document leaves a lot to be desired!!{.is-warning}
