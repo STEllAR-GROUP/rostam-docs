@@ -26,15 +26,19 @@ Use `sinfo` to see what partitions exist on the system, what nodes they include,
 
 ```bash
 $ sinfo 
-PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
-medusa*      up 3-00:00:00     16   idle medusa[00-15] 
-cuda         up 3-00:00:00      1  alloc reno 
-cuda         up 3-00:00:00      4   idle bahram,carson,diablo,geev 
-QxV100       up 3-00:00:00      1   idle diablo 
-v100         up 3-00:00:00      1   idle geev 
-k80          up 3-00:00:00      1   idle bahram 
-k40          up 3-00:00:00      1  alloc reno 
-fury         up 3-00:00:00      1  alloc reno 
+PARTITION       AVAIL  TIMELIMIT  NODES  STATE NODELIST
+medusa*            up 3-00:00:00     16  idle medusa[00-15]
+buran              up 3-00:00:00     15   idle buran[00-03,05-15]
+cuda               up 1-00:00:00      1  alloc diablo
+cuda               up 1-00:00:00      6   idle bahram,geev,nasrin[0-1],toranj[0-1]
+cuda-V100          up 1-00:00:00      1  alloc diablo
+cuda-V100          up 1-00:00:00      2   idle bahram,geev
+cuda-A100          up 3-00:00:00      4   idle nasrin[0-1],toranj[0-1]
+cuda-A100-intel    up 1-00:00:00      2   idle toranj[0-1]
+cuda-A100-amd      up 1-00:00:00      2   idle nasrin[0-1]
+DGX-A100           up 3-00:00:00      1   idle anvil
+mi100              up 1-00:00:00      1   idle kamand[0-1]
+marvin             up 10-00:00:0     13   idle marvin[00-15]
 ```
 
 #### squeue
@@ -243,15 +247,16 @@ On Rostam the SLURM is compiled with support for both `PMI2` and `PMIx` API
 
 ````bash
 $ srun --mpi=list
-srun: MPI types are...
-srun: none
-srun: pmi2
-srun: pmix
-srun: pmix_v3
-srun: cray_shasta
+MPI plugin types are...
+	pmix
+	cray_shasta
+	none
+	pmi2
+specific pmix plugin versions available: pmix_v2
 ````
 
-> In Rostam's `slurm.conf` the default MPI is set as `MpiDefault=pmix_v3`
+> In Rostam's `slurm.conf` the default MPI is set as `MpiDefault=pmi2
+`
 > Users can override the default API by `srun --mpi=` or equivalent environment variable `SLURM_MPI_TYPE` {.is-success}
 
 ### OpenMPI
@@ -295,19 +300,3 @@ mpicc -lpmi2 ...
 srun --mpi=pmi2 -n 20 my_mpi_app
 ````
 
-### Raspberry PI
-
-SLURM provided by Ubuntu Server on Raspberry PI does not support PMIx. Since the default MPI is `pmix_v3` on entire cluster, launching any job on Raspberry PI will fail unless you explicitly specify a supported MPI.
- 
-````bash
-rpi4-64-00:~$ srun --mpi=list
-srun: MPI types are...
-srun: none
-srun: openmpi
-srun: pmi2
-````
-
-````bash
-$ srun --mpi=none -p rpi4-64 hostname
-rpi4-64-01.rostam.cct.lsu.edu
-````

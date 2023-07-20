@@ -16,14 +16,15 @@ Rostam Cluster Consists of 53 nodes ranging from Intel's Skylake with Nvidia V10
 |Buran      |48 (Rome)          |256 GB |None           |Compute|16     |
 |Medusa     |40 (Skylake)       |96 GB  |None           |Compute|16     |
 |Marvin     |16 (Sandy Bridge)  |48 GB  |None           |Compute|16     |
-|Anvil      |128 (Rome)         |2 TB   |8 x V100       |Compute|1      |
+|Anvil      |128 (Rome)         |2 TB   |8 x A100       |Compute|1      |
 |Nasrin     |128 (Rome)         |512 GB |2 x A100       |Compute|2      |
 |Kamand     |128 (Rome)         |512 GB |2 x MI100      |Compute|2      |
 |Toranj     |64 (Icelake)       |256 GB |4 x A100       |Compute|2      |
 |Diablo     |40 (Skylake)       |386 GB |4 x V100       |Compute|1      |
 |Geev       |20 (Haswell)       |256 GB |1 x V100       |Compute|1      |
 |Bahram     |20 (Haswell)       |128 GB |1 x V100       |Compute|1      |
-|RPi4       |4 (Cortex-A72)     |4 GB   |None           |Compute|4      |
+|RPi4       |4 (Cortex-A72)     |4 GB   |None           |Compute|2      |
+|Risc-V     |4 (RISCV-64)       |8 GB   |None           |Compute|2      |
 |DrStrange  |16 (Haswell)       |64 GB  |None           |Storage|1      |
 |Troy       |16 (Sandy Bridge)  |64 GB  |None           |Storage|1      |
 |Rostam1    |24 (Skylake)       |96 GB  |None           |Login  |1      |
