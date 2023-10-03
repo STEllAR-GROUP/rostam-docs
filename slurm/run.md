@@ -15,7 +15,7 @@ Rostam uses [SLURM](https://slurm.schedmd.com/) to allocate resources and launch
 
 ### Terminology
 
-In the Slurm terminlogy **nodes** are the compute resource. The node are grouped into logical (possibly overlapping) sets called **partitions**. The partitions can be considered as job **queues**, each of which could have its own settings such as the job size limit, the job time limit and the users permitted to use the partition, etc. **jobs** or **allocations** are resources assigned to a user for a specified amount of time, and **job steps** are sets of (possibly parallel) tasks within a job.
+In the Slurm terminology **nodes** are the compute resource. The node are grouped into logical (possibly overlapping) sets called **partitions**. The partitions can be considered as job **queues**, each of which could have its own settings such as the job size limit, the job time limit and the users permitted to use the partition, etc. **jobs** or **allocations** are resources assigned to a user for a specified amount of time, and **job steps** are sets of (possibly parallel) tasks within a job.
 
 >On Rostam the unit of allocation is a CPU core, but there is no hard limit on the resource, your job can expand to all available cores on the allocated node.{.is-info}
 
@@ -147,7 +147,7 @@ JobId=7517 JobName=bash
  - `-p` or `--partition=` partition or queue 
  - `-N` or `--nodes=` number of nodes to allocate
  - `-w` or `--nodelist=` explicitly specifies the nodes to allocate
- - `-n` or `--ntasks=` number of proecesses to launch
+ - `-n` or `--ntasks=` number of processes to launch
  - `-t` or `--time=` time limit on the job allocation
  - `--exclusive` allocate the node exclusively to the job, all the resources on the node are available to the job
  
@@ -193,7 +193,7 @@ medusa01 ~]$
 
 > Rostam does not let you login to any compute node unless you have a running job on that node (the node is allocated to you).{.is-warning}
 
-> For more onformation look at `srun` [documentaion](https://slurm.schedmd.com/srun.html){.is-success}
+> For more information look at `srun` [documentation](https://slurm.schedmd.com/srun.html){.is-success}
 
 
 ### sbatch
@@ -243,7 +243,7 @@ medusa01
 
 ## Running MPI Jobs
 
-There three ways to launch an MPI applicatioin using SLURM:
+There three ways to launch an MPI application using SLURM:
 1. Slurm directly launches the tasks and performs initialization of communications through the PMI2 or PMIx APIs. (Supported by most modern MPI implementations.)
 1. Slurm creates a resource allocation for the job and then `mpirun` launches tasks using Slurm's infrastructure (older versions of OpenMPI).
 1. Slurm creates a resource allocation for the job and then mpirun launches tasks using some mechanism other than Slurm, such as SSH (Not recommended).

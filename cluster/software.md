@@ -7,14 +7,14 @@ tags:
 editor: markdown
 ---
 
-Rostam is built with the mindset that it sould create a friendly environment for students who want to expand their knowledge, while at the same time it could be used by exprienced programmers as a test bed, before they move to a bigger cluster where the real computation happens.
+Rostam is built with the mindset that it should create a friendly environment for students who want to expand their knowledge, while at the same time it could be used by experienced programmers as a test bed, before they move to a bigger cluster where the real computation happens.
 
-While Rostam tries to keep itself up do date with the latest developments, it also tries to keep the conventional tools and configuration in place. The small size of the cluster and number of its users make it possible to better accomodate users' needs.
+While Rostam tries to keep itself up do date with the latest developments, it also tries to keep the conventional tools and configuration in place. The small size of the cluster and number of its users make it possible to better accommodate users' needs.
 
 ## CentOS 8
 Many academic cluster today use *Red Hat Enterprise Linux (RHEL)* or its cloned brother, the *Community Enterprise Operating System* **(CentOS)**. While many clusters stayed with version 7 of the OS, early on we decided to move to CentOS 8 and continue to upgrade the minor version (currently version 8.2)
 
-The main problem on *RHEL/CentOS version 7* was the dual ABI problem in *gcc*. The gcc prior version 5.1 used the old ABI or better to say the newer version use the new ABI which is not compatible with each other. *RHEL/CentOS 7* is compiled with *gcc 4.8* and comes with that compiler, therefore all libraries are compiled with the old ABI. As it is obvius, the *gcc 4.8* is ancient and lacks certain features, to have a new version of the compiler we had to compile our own compiler. It is possible configure the newer gcc to use old ABI, but this was agaist the whole point of having a new compiler. On the other hand the new ABI means the binaries become incompatible, so we had to compile many other libraries with new ABI to make our own platform. Many systems may opt to use the old ABI for all compiler, we found it easier to jump forward and use the new ABI for every library.
+The main problem on *RHEL/CentOS version 7* was the dual ABI problem in *gcc*. The gcc prior version 5.1 used the old ABI or better to say the newer version use the new ABI which is not compatible with each other. *RHEL/CentOS 7* is compiled with *gcc 4.8* and comes with that compiler, therefore all libraries are compiled with the old ABI. As it is obvious, the *gcc 4.8* is ancient and lacks certain features, to have a new version of the compiler we had to compile our own compiler. It is possible configure the newer gcc to use old ABI, but this was against the whole point of having a new compiler. On the other hand the new ABI means the binaries become incompatible, so we had to compile many other libraries with new ABI to make our own platform. Many systems may opt to use the old ABI for all compiler, we found it easier to jump forward and use the new ABI for every library.
 
 The base system on the cluster is:
 
@@ -28,7 +28,7 @@ The base system on the cluster is:
 
 ## Software Library
 
-Many software libraris and application are provided by official CentOS repositories or supporded thrid-parties. Also we have compiled many more libraries to satisfy the needs of developers and researchers. In general softwares available on Rostam could be divided in three categories:
+Many software libraries and application are provided by official CentOS repositories or supported third-parties. Also we have compiled many more libraries to satisfy the needs of developers and researchers. In general softwares available on Rostam could be divided in three categories:
 
 - Software provided by official repositories. These softwares are available throughout the system and usually require no special configuration to use. (i.e. fish, singularity, vim ...)
 - Softwares compiled by admins using default compiler on the system. To used these libraries you should load the appropriate [Environment Module](#Environment-Module). (i.e. cmake, gcc, clang ...)
@@ -49,7 +49,7 @@ module load hwloc      # defines hwloc-related env vars; modifies others
 module unload hwloc    # undoes changes made by load
 ```
 
-The module system does more, however. When you load a given module, the module system can automatically replace or deactivate confilicing modules to ensure the packages you have loaded are compatible with each other. In the example below, the module system automatically unloads one compiler when you load another, It also reloads the dependent library when available:
+The module system does more, however. When you load a given module, the module system can automatically replace or deactivate conflicting modules to ensure the packages you have loaded are compatible with each other. In the example below, the module system automatically unloads one compiler when you load another, It also reloads the dependent library when available:
 
 ```bash
 $ module load gcc/9.3.0
@@ -103,7 +103,7 @@ module restore 		# load your personal default collection of modules
 
 On Rostam, the command `module reset` is equivalent to `module purge; module load Rostam2`. It's a safer, easier way to get to a known baseline state than issuing the two commands separately.
 
-You can also give a name to your saved collection and keep multipe saved collections:
+You can also give a name to your saved collection and keep multiple saved collections:
 
 ```bash
 module save c9b72r

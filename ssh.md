@@ -1,5 +1,5 @@
 ---
-title: Connetcing to Rostam
+title: Connecting to Rostam
 description: How to connect to Rostam via ssh
 published: true
 date: 2020-05-12T11:13:34.538Z
@@ -30,8 +30,8 @@ Connecting to the cluster by typing password and using the full hostname could b
 
 You can:
 
-- Setup Public Key Authentication to avoide typing password for each login.
+- Setup Public Key Authentication to avoid typing password for each login.
 - Configure SSH client to avoid typing username and hostname each time
 - Setup ProxyJump to access a compute node directly from your workstation.
 
-By following our [Advaced SSH Configuration](/ssh/advanced_ssh) instructions.
+By following our [Advanced SSH Configuration](/ssh/advanced_ssh) instructions.
