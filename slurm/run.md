@@ -2,7 +2,7 @@
 title: Running Jobs
 description: 
 published: true
-date: 2020-08-20T21:01:58.258Z
+date: 2023-10-03
 tags: 
 editor: markdown
 ---
@@ -15,23 +15,27 @@ Rostam uses [SLURM](https://slurm.schedmd.com/) to allocate resources and launch
 
 ### Terminology
 
-In the Slurm terminlogy **nodes** are the compute resource. The node are grouped into logical (possibly overlapping) sets called **partitions** are groups of nodes into a logical (possibly overlapping) sets. The partitions can be considered as job **queues**, each of which could have its own settings such as the job size limit, the job time limit and the users permitted to use the partition, etc. **jobs** or **allocations** are resources assigned to a user for a specified amount of time, and **job steps** are sets of (possibly parallel) tasks within a job.
+In the Slurm terminlogy **nodes** are the compute resource. The node are grouped into logical (possibly overlapping) sets called **partitions**. The partitions can be considered as job **queues**, each of which could have its own settings such as the job size limit, the job time limit and the users permitted to use the partition, etc. **jobs** or **allocations** are resources assigned to a user for a specified amount of time, and **job steps** are sets of (possibly parallel) tasks within a job.
 
->On Rostam the unit of allocation is a node, you can not allocate half a node.{.is-info}
+>On Rostam the unit of allocation is a CPU core, but there is no hard limit on the resource, your job can expand to all available cores on the allocated node.{.is-info}
 
-### Basic Slurm Commands
+>To avoid any other job running on the node that your job is running you can use `--exlucsive` option.{.is-info}
 
-#### sinfo
+>There is hard limit on GPU resources, you need to exactly specify the number GPUs for you job.{.is-warning}
+
+## Basic Slurm Commands
+
+### sinfo
 Use `sinfo` to see what partitions exist on the system, what nodes they include, and general system state.
 
 ```bash
 $ sinfo 
 PARTITION       AVAIL  TIMELIMIT  NODES  STATE NODELIST
-medusa*            up 3-00:00:00     16  idle medusa[00-15]
+medusa*            up 3-00:00:00     16   idle medusa[00-15]
 buran              up 3-00:00:00     15   idle buran[00-03,05-15]
-cuda               up 1-00:00:00      1  alloc diablo
+cuda               up 1-00:00:00      1   alloc diablo
 cuda               up 1-00:00:00      6   idle bahram,geev,nasrin[0-1],toranj[0-1]
-cuda-V100          up 1-00:00:00      1  alloc diablo
+cuda-V100          up 1-00:00:00      1   alloc diablo
 cuda-V100          up 1-00:00:00      2   idle bahram,geev
 cuda-A100          up 3-00:00:00      4   idle nasrin[0-1],toranj[0-1]
 cuda-A100-intel    up 1-00:00:00      2   idle toranj[0-1]
@@ -41,7 +45,7 @@ mi100              up 1-00:00:00      1   idle kamand[0-1]
 marvin             up 10-00:00:0     13   idle marvin[00-15]
 ```
 
-#### squeue
+### squeue
 To determine what jobs exist on the system use the `squeue` command. 
 
 ```bash
@@ -53,7 +57,7 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
 
 The `ST` field is job state. A jobs is in a running state (`R` indicates *Running*) and a job in pending state (`PD` indicates *Pending*). The TIME field shows how long the jobs have been running (the format is days-hours:minutes:seconds). The NODELIST(REASON) field indicates where the job is running or the reason it is still pending. Typical reasons for pending jobs are Resources (waiting for resources to become available) and Priority (queued behind a higher priority job).
 
-#### scontrol
+### scontrol
 
 The `scontrol` command can be used to report more detailed information about nodes, partitions, jobs, job steps, and configuration.
 
@@ -136,15 +140,16 @@ JobId=7517 JobName=bash
 ...
 ```
 
-#### srun
+### srun
 
 `srun` allocates resources and launches the taks for the job in a single command `srun [options] <executable> [args]`. Some common options for srun include:
 
- - `-p` partition or queue 
- - `-N` number of nodes to allocate
- - `-w` explicitly specifies the nodes to allocate
- - `-n` number of proecesses to launch
- - `-t` time limit on the job allocation
+ - `-p` or `--partition=` partition or queue 
+ - `-N` or `--nodes=` number of nodes to allocate
+ - `-w` or `--nodelist=` explicitly specifies the nodes to allocate
+ - `-n` or `--ntasks=` number of proecesses to launch
+ - `-t` or `--time=` time limit on the job allocation
+ - `--exclusive` allocate the node exclusively to the job, all the resources on the node are available to the job
  
 **Example 1**: Allocating 4 nodes from default partition and run `hostname` command
 ```bash
@@ -182,13 +187,16 @@ marvin09
 **Example 4**: Allocate a node form *medusa* partition for one hour and launch an interactive session 
 
 ```bash
-rostam0 ~]$ srun -p medusa -N 1 -t 1:00:00 --pty /bin/bash -l
+rostam0 ~]$ srun -p medusa --exclusive -N 1 -t 1:00:00 --pty /bin/bash -l
 medusa01 ~]$ 
 ```
 
 > Rostam does not let you login to any compute node unless you have a running job on that node (the node is allocated to you).{.is-warning}
 
-#### sbatch
+> For more onformation look at `srun` [documentaion](https://slurm.schedmd.com/srun.html){.is-success}
+
+
+### sbatch
 
 It makes it possible to organize a series of operation in a script to be executed. The options can be supplied as desired by using a prefix `#SBATCH` followed by the option at the beginning of the script (before any commands to be executed in the script). Options supplied on the command line would override any options specified within the script.
 
@@ -203,6 +211,7 @@ It makes it possible to organize a series of operation in a script to be execute
 #SBATCH --ntasks=4
 #SBATCH --nodes=2
 #SBATCH --time=10:00
+#SBATCH --exclusive
 
 # Normal shell scripts starts here. The options above would apply to all srun commands.
 module load gcc
@@ -214,21 +223,21 @@ execute:
 
 ```bash
 $ sbatch myjob.sh 
-Submitted batch job 7533
+Submitted batch job 165019
 ```
 
 see the output:
 
 ```bash
 $ cat sbatch.out 
-medusa02
-medusa03
-medusa02
-medusa03
-4.18.0-193.6.3.el8_2.x86_64
-4.18.0-193.6.3.el8_2.x86_64
-4.18.0-193.6.3.el8_2.x86_64
-4.18.0-193.6.3.el8_2.x86_64
+medusa00
+medusa00
+medusa01
+medusa01
+4.18.0-477.27.1.el8_8.x86_64
+4.18.0-477.27.1.el8_8.x86_64
+4.18.0-477.27.1.el8_8.x86_64
+4.18.0-477.27.1.el8_8.x86_64
 ```
 > Options supplied on the command line would override any options specified within the script. {.is-info}
 
