@@ -2,7 +2,7 @@
 title: Running GPU Jobs
 description: 
 published: true
-date: 2023-10-05T13:24:28.428Z
+date: 2023-10-05T13:25:08.753Z
 tags: 
 editor: markdown
 dateCreated: 2023-10-03T20:20:46.397Z
@@ -34,7 +34,7 @@ GPU  Temp (DieEdge)  AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
 
 Access to Nvidia GPUs are controlled by SLURM's *Generic Resource (GRES) Scheduling*
 
-> Running a job with or without `--exclusive` on a with with Nvidia GPU will **not** grant access the GPU unless you explicitly specify the GPU resources by GRES options!{.is-warning}
+> Running a job with or without `--exclusive` on a with with Nvidia GPU will **not** grant access to the GPU unless you explicitly specify the GPU resources by GRES options!{.is-warning}
 
 Jobs will not be allocated any generic resources unless specifically requested at job submit time using the options:
 
