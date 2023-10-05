@@ -2,9 +2,10 @@
 title: Running GPU Jobs
 description: 
 published: true
-date: 2023-10-03
+date: 2023-10-05T13:24:28.428Z
 tags: 
 editor: markdown
+dateCreated: 2023-10-03T20:20:46.397Z
 ---
 
 Rostam has GPU nodes with AMD MI100 GPUs and Nvidia V100 and A100. Refer to [list of available hardware](/cluster/hardware)
@@ -33,7 +34,7 @@ GPU  Temp (DieEdge)  AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
 
 Access to Nvidia GPUs are controlled by SLURM's *Generic Resource (GRES) Scheduling*
 
-> Running a job with or without `--exclusive` on a with with Nvidia GPU will grant access the GPU unless to explicitly specify the GPU by `--gres` option!{.is-warning}
+> Running a job with or without `--exclusive` on a with with Nvidia GPU will **not** grant access the GPU unless you explicitly specify the GPU resources by GRES options!{.is-warning}
 
 Jobs will not be allocated any generic resources unless specifically requested at job submit time using the options:
 
