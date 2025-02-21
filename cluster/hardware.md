@@ -2,9 +2,10 @@
 title: Hardware Resources
 description: 
 published: true
-date: 2023-10-03
+date: 2025-02-21T15:27:21.776Z
 tags: 
 editor: markdown
+dateCreated: 2023-07-13T17:39:41.792Z
 ---
 
 Rostam Cluster consists of 62 nodes with rainbow of hardware ranging from Intel's Skylake to AMD Rome, with Nvidia V100 and A100 to AMD MI100 GPUs.
@@ -21,8 +22,8 @@ Rostam Cluster consists of 62 nodes with rainbow of hardware ranging from Intel'
 |Kamand     |128 (Rome)         |512 GB |2 x MI100      |Compute|2      |
 |Toranj     |64 (Icelake)       |256 GB |4 x A100       |Compute|2      |
 |Diablo     |40 (Skylake)       |386 GB |4 x V100       |Compute|1      |
-|Geev       |20 (Haswell)       |256 GB |1 x V100       |Compute|1      |
-|Bahram     |20 (Haswell)       |128 GB |1 x V100       |Compute|1      |
+|Geev       |20 (Haswell)       |256 GB |2 x n300d      |Compute|1      |
+|Bahram     |20 (Haswell)       |128 GB |2 x V100       |Compute|1      |
 |DrStrange  |16 (Haswell)       |64 GB  |None           |Storage|1      |
 |Troy       |16 (Sandy Bridge)  |64 GB  |None           |Storage|1      |
 |Rostam1    |24 (Skylake)       |96 GB  |None           |Login  |1      |
