@@ -12,3 +12,5 @@ dateCreated: 2023-07-13T17:39:35.056Z
 >
 > Please report any issue about documentation [here](https://github.com/STEllAR-GROUP/rostam-docs/issues)
 {.is-info}
+
+[Group Contact Information](https://stellar-group.org/)
