@@ -8,9 +8,7 @@ editor: markdown
 dateCreated: 2023-07-13T17:39:35.056Z
 ---
 
-> This document leaves a lot to be desired!!{.is-warning}
-
-> Documentation is being worked on! Some pages may be incomplete or not exist yet. Help us expand it by contributing to our Github [repo](https://github.com/STEllAR-GROUP/rostam-docs)
+> Some pages may be incomplete or not exist yet. Help us expand it by contributing to our Github [repo](https://github.com/STEllAR-GROUP/rostam-docs)
 >
 > Please report any issue about documentation [here](https://github.com/STEllAR-GROUP/rostam-docs/issues)
 {.is-info}
