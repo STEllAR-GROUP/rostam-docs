@@ -2,13 +2,13 @@
 title: Hardware Resources
 description: 
 published: true
-date: 2025-02-21T15:27:21.776Z
+date: 2026-09-30T14:35:24.464Z
 tags: 
 editor: markdown
 dateCreated: 2023-07-13T17:39:41.792Z
 ---
 
-Rostam Cluster consists of 62 nodes with rainbow of hardware ranging from Intel's Skylake to AMD Rome, with Nvidia V100 and A100 to AMD MI100 GPUs.
+Rostam Cluster consists of a heterogeneous mix of Intel- and AMD-based systems, with NVIDIA V100 and A100 GPUs and AMD MI100 GPUs.
 
 ## Hardware Summary
 
@@ -17,26 +17,30 @@ Rostam Cluster consists of 62 nodes with rainbow of hardware ranging from Intel'
 |Buran      |48 (Rome)          |256 GB |None           |Compute|16     |
 |Medusa     |40 (Skylake)       |96 GB  |None           |Compute|16     |
 |Marvin     |16 (Sandy Bridge)  |48 GB  |None           |Compute|16     |
+|Sven       |TBD                |TBD    |TBD            |Compute|2      |
+|Spark      |TBD                |TBD    |TBD            |Compute|4      |
 |Anvil      |128 (Rome)         |2 TB   |8 x A100       |Compute|1      |
 |Nasrin     |128 (Rome)         |512 GB |2 x A100       |Compute|2      |
 |Kamand     |128 (Rome)         |512 GB |2 x MI100      |Compute|2      |
-|Toranj     |64 (Icelake)       |256 GB |4 x A100       |Compute|2      |
+|Toranj     |64 (Ice Lake)      |256 GB |4 x A100       |Compute|2      |
 |Diablo     |40 (Skylake)       |386 GB |4 x V100       |Compute|1      |
 |Geev       |20 (Haswell)       |256 GB |2 x n300d      |Compute|1      |
 |Bahram     |20 (Haswell)       |128 GB |2 x V100       |Compute|1      |
 |DrStrange  |16 (Haswell)       |64 GB  |None           |Storage|1      |
-|Troy       |16 (Sandy Bridge)  |64 GB  |None           |Storage|1      |
+|Volga      |TBD                |TBD    |None           |Storage|1      |
 |Rostam1    |24 (Skylake)       |96 GB  |None           |Login  |1      |
-|Marjorie   |48 (Rome)          |128 GB |None           |Head   |1      |
 
-> All nodes have Hyper-threading off.
+> Existing documented nodes have Hyper-threading disabled. Hyper-threading status for newly added systems should be verified.
 {.is-info}
 
 ## Interconnect
 
-As the msn tool of communication between the nodes, Rostam uses HDR (200Gbps) and FDR(56Gbps) infiniband connectivity with fat tree topology.
+As the main communication fabric between nodes, Rostam uses HDR (200 Gbps) and FDR (56 Gbps) InfiniBand connectivity with a fat-tree topology.
 
-Rostam also has a 25Gb SFP28 ethernet switch and a 1Gb copper cable ehternet switch to use on the nodes withouth Inifiniband connectivity.
+Rostam also has a 25 Gb SFP28 Ethernet switch and a 1 Gb copper Ethernet switch for nodes without InfiniBand connectivity.
 
 ## Storage
-DrStrange is our main storage server configured with ZFS. It uses ten 14TB 7.2K 12Gb SAS disks divided into two RAID-Z1 VDEVs, with two 16GB PCIe Intel Optane for write buffer.
+
+DrStrange is configured as a ZFS storage server. It uses ten 14 TB 7.2K 12 Gb SAS disks divided into two RAID-Z1 VDEVs, with two 16 GB PCIe Intel Optane devices for write buffering.
+
+Volga is also used for storage and NFS services. Its hardware configuration should be documented after verification.
