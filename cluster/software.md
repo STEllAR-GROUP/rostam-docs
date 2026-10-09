@@ -2,7 +2,7 @@
 title: Software Library
 description: 
 published: true
-date: 2026-10-09T23:35:51.937Z
+date: 2026-10-09T23:40:49.281Z
 tags: 
 editor: markdown
 dateCreated: 2023-07-13T17:39:46.278Z
@@ -13,25 +13,25 @@ dateCreated: 2023-07-13T17:39:46.278Z
 
 Rostam is designed to provide a friendly and accessible computing environment for students, researchers, and developers who want to expand their knowledge of high-performance computing (HPC).
 
-The cluster supports both newcomers learning parallel programming and experienced developers who need a flexible environment for testing, debugging, and validating software before moving to larger production computing systems.
+The cluster serves both newcomers learning parallel programming and experienced developers who need a flexible environment for testing, debugging, and validating software before moving to larger production computing systems.
 
-Consistent with the principles of *Magnifica Humanitas*, Rostam emphasizes accessibility, exploration, responsible use of shared resources, and reproducible scientific computing.
+Consistent with the principles of *Magnifica Humanitas*, Rostam emphasizes accessibility, exploration, collaboration, responsible use of shared computing resources, and reproducible scientific computing.
 
-Rostam strives to incorporate modern software, programming languages, compilers, and development tools while maintaining compatibility with conventional computing environments. Its relatively small size and diverse hardware allow administrators to accommodate specialized research and development needs.
+Rostam strives to incorporate modern software, compilers, programming languages, and development tools while maintaining conventional tools and established workflows. Its relatively small size and diverse hardware allow administrators to accommodate specialized research and development needs.
 
-Because Rostam contains several processor architectures and operating systems, software availability is not necessarily identical on every node.
+Because Rostam includes several processor architectures and operating systems, software availability is not necessarily identical across all nodes.
 
-> **Looking for a particular compiler, library, or development environment?**
+> **Looking for a particular compiler, library, or software package?**
 >
-> See [Software Availability by System](/software/availability) for a summary of installed software, compiler versions, scientific libraries, and GPU development environments across Rostam's computing platforms.
+> See [Software Availability by System](/en/software/availability) for a current summary of compilers, programming languages, MPI implementations, scientific libraries, and GPU development environments across Rostam's computing systems.
 
 ## Operating Systems
 
-Rostam operates a heterogeneous collection of systems using several Linux distributions.
+Rostam operates a heterogeneous collection of computing systems using several Linux distributions.
 
-Historically, the cluster used CentOS. The computing environment has since transitioned primarily to AlmaLinux, with additional operating systems supporting specialized architectures and infrastructure.
+Historically, the cluster used CentOS. The main x86-64 compute environment has since transitioned to AlmaLinux 9, while specialized processor architectures and infrastructure systems use other Linux distributions.
 
-As of the October 9, 2026 software inventory, the principal operating systems are:
+As of the October 9, 2026 software inventory:
 
 | Operating System | Systems | Architecture |
 |---|---|---|
@@ -41,52 +41,52 @@ As of the October 9, 2026 software inventory, the principal operating systems ar
 | Fedora Linux 38 | Sven | RISC-V |
 | Red Hat Enterprise Linux 9.x | Selected infrastructure and storage systems | x86-64 |
 
-The operating system provides the system compiler, runtime libraries, kernel, and basic utilities.
+The operating system provides the kernel, system compiler, runtime libraries, package management, and basic utilities.
 
-For example, most AlmaLinux 9.6 compute nodes provide:
+For example, the main AlmaLinux 9.6 compute environment provides:
 
 | Component | System Version |
 |---|---|
-| Operating system | AlmaLinux 9.6 |
-| Linux kernel | 5.14 series |
+| Operating System | AlmaLinux 9.6 |
+| Linux Kernel | 5.14 series |
 | GCC | 11.5.0 |
 | glibc | 2.34 |
-| GNU binutils | 2.35 series |
-| Python | 3.9.21 |
+| GNU Binutils | 2.35 series |
+| Python | 3.9 |
 | CMake | 3.26.5 |
 | LLVM/Clang | 19.1.7 |
 
-These are system-provided versions. Newer compilers, Python interpreters, build tools, and scientific libraries are available through the environment module system.
+These are system-provided versions. Additional compilers, language runtimes, development tools, and scientific libraries are available through environment modules.
 
-The ARM64 and RISC-V platforms have their own native software environments.
+The ARM64 and RISC-V systems maintain separate native software environments.
 
-### Why Different Operating Systems?
+### Identifying Your System
 
-Different processor architectures require different operating-system support, compiler toolchains, and software packages.
-
-Maintaining more than one Linux environment allows Rostam to support conventional x86-64 computing alongside emerging architectures such as ARM64 and RISC-V.
-
-It also allows researchers to test whether software can be compiled and executed across different environments.
-
-Applications may require recompilation or different dependencies when moving between architectures.
-
-To identify the operating system on your current node:
+To identify the operating system:
 
 ```bash
 cat /etc/os-release
 ```
 
-To identify its processor architecture:
+To check the processor architecture:
 
 ```bash
 uname -m
 ```
 
-To check the running kernel:
+To check the kernel:
 
 ```bash
 uname -r
 ```
+
+To display the hostname:
+
+```bash
+hostname
+```
+
+These commands are particularly useful when compiling software for different architectures.
 
 ## Software Organization
 
@@ -94,17 +94,18 @@ Software on Rostam is generally provided through three mechanisms.
 
 ### System Software
 
-System software is installed using the operating system's package management tools.
+System software is installed through operating-system package repositories and managed by system administrators.
 
 Examples include:
 
-- Shell utilities and text editors.
-- System compilers.
-- Python and other language runtimes.
-- Basic development libraries.
-- Operating-system utilities.
+- Shells and basic command-line utilities
+- Text editors
+- System compilers
+- Python and other language runtimes
+- Standard development libraries
+- Operating-system utilities
 
-These applications are generally available without loading an environment module.
+This software is generally available without loading environment modules.
 
 For example:
 
@@ -114,11 +115,11 @@ python3 --version
 cmake --version
 ```
 
-The exact versions depend on the node and operating system.
+The versions returned depend on the node and its operating system.
 
 ### Administrator-Managed Software
 
-Rostam administrators maintain additional software installations, primarily through shared or architecture-specific application directories.
+Rostam administrators maintain additional software installations to support research and development requirements.
 
 Many of these installations are located under:
 
@@ -126,61 +127,62 @@ Many of these installations are located under:
 /opt/apps
 ```
 
-Examples include:
+Software available through this environment includes:
 
-- Additional GCC versions.
-- LLVM/Clang toolchains.
-- Boost C++ libraries.
-- Python installations.
-- CMake releases.
-- Open MPI and supporting libraries.
-- Scientific data libraries.
-- GPU development environments.
+- Additional GCC compiler versions
+- LLVM/Clang
+- Boost C++ libraries
+- Python interpreters
+- CMake
+- Open MPI
+- UCX and PMIx
+- Scientific data libraries
+- GPU development toolkits
 
-This software is commonly accessed through Lmod environment modules.
+These installations are commonly made available through Lmod environment modules.
+
+Users generally do not need administrative privileges to access module-managed software.
 
 ### Compiler-Dependent Software
 
-Certain scientific libraries must be compiled with specific compilers, compiler flags, or dependency versions.
+Some libraries must be compiled for a particular compiler, standard library, or dependency environment.
 
-For example, a Boost installation built using GCC may not be interchangeable with one built using Clang.
+For example, a Boost library compiled using GCC may not be interchangeable with one compiled using Clang.
 
-Similarly, MPI libraries and their dependent applications must use compatible compiler and runtime environments.
+Similarly, MPI libraries and applications must use compatible compiler and runtime environments.
 
-Rostam uses hierarchical environment modules to organize these dependencies.
+Rostam uses a hierarchical module configuration to organize such dependencies.
 
-Some modules may become available only after loading the appropriate compiler or prerequisite environment.
+Some modules become available only after loading the appropriate compiler or prerequisite software.
 
-This reduces accidental combinations of incompatible software.
+This helps prevent users from accidentally combining incompatible tools or libraries.
 
-For a current overview, see [Software Availability by System](/software/availability).
+## Compiler Compatibility and ABIs
 
-## Compiler Compatibility and Application Binary Interfaces
+Compiler compatibility is particularly important in high-performance and scientific computing.
 
-Compiler compatibility is particularly important in scientific computing.
-
-Applications are frequently linked against external C, C++, Fortran, MPI, or numerical libraries.
+Applications frequently link against C, C++, Fortran, MPI, and numerical libraries.
 
 These components must use compatible application binary interfaces (ABIs), runtime libraries, and calling conventions.
 
-For example, GCC 5 introduced a new C++ standard library ABI affecting certain types, including `std::string` and `std::list`.
+For example, GCC 5 introduced changes to the C++ standard library ABI affecting certain types, including `std::string` and `std::list`.
 
-Libraries built using incompatible ABI settings can produce linker errors or runtime problems.
+Mixing libraries compiled with incompatible ABI settings can result in linking failures or runtime problems.
 
-Modern Rostam systems use newer operating systems and compilers, avoiding many of the problems associated with older CentOS 7 environments and GCC 4.8.
-
-However, compiler compatibility remains important when mixing libraries or upgrading software.
+Modern Rostam systems avoid many of the limitations associated with older CentOS 7 installations and GCC 4.8, but compiler compatibility remains important.
 
 ### Recommended Practices
 
-- Use a consistent compiler environment when building an application and its dependencies.
-- Load the appropriate compiler module before compiling dependent libraries.
+- Use a consistent compiler when building applications and their dependencies.
+- Load the desired compiler before building compiler-dependent libraries.
 - Avoid mixing incompatible MPI implementations.
-- Record compiler and library versions used for important builds.
-- Rebuild applications when switching between incompatible compiler or ABI environments.
-- Test applications after changing compiler or runtime versions.
+- Record compiler and library versions for important builds.
+- Rebuild software when switching between incompatible compiler environments.
+- Test applications when upgrading compilers or runtime libraries.
 
-The newest compiler is not necessarily the best choice for every application. Some software may require an older, better-tested compiler or a particular ABI.
+The newest compiler is not necessarily the best choice for every application.
+
+Some scientific software requires a particular compiler version for compatibility or reproducibility.
 
 Rostam maintains multiple compiler versions to accommodate these requirements.
 
@@ -190,35 +192,34 @@ Rostam uses [Lmod](https://lmod.readthedocs.io/), a Lua-based environment module
 
 Lmod allows users to select software packages and versions without modifying system-wide installations.
 
-An environment module changes shell settings so that executables, libraries, headers, and other resources become available to the user.
+An environment module changes shell environment settings so that the corresponding applications, libraries, headers, and related resources become accessible.
 
-For example, a module may modify:
+For example, loading a module may modify:
 
-```bash
-PATH
-LD_LIBRARY_PATH
-CPATH
-LIBRARY_PATH
-PKG_CONFIG_PATH
-```
+- `PATH`
+- `LD_LIBRARY_PATH`
+- `CPATH`
+- `LIBRARY_PATH`
+- `PKG_CONFIG_PATH`
+- `MODULEPATH`
 
 Loading a module does not install software. It configures your environment to use an existing installation.
 
 ### Listing Available Modules
 
-To list software modules currently available:
+To list modules currently available:
 
 ```bash
 module avail
 ```
 
-This displays modules accessible within your current environment.
+This lists modules accessible within the current environment.
 
-Rostam uses hierarchical module paths, so the output may change depending on which compiler or other prerequisites are loaded.
+Because Rostam uses hierarchical module paths, the available modules may change when different compilers or prerequisite libraries are loaded.
 
 ### Searching for Software
 
-Use `module spider` to search the complete Lmod module hierarchy:
+Use `module spider` to search the complete module hierarchy:
 
 ```bash
 module spider
@@ -230,17 +231,17 @@ To search for a particular package:
 module spider boost
 ```
 
-To inspect a particular version:
+To inspect a specific version:
 
 ```bash
 module spider boost/1.92.0-release
 ```
 
-The detailed output may explain which compiler or prerequisite modules must be loaded before the package becomes available.
+The detailed output may explain which compiler or prerequisite modules are required before the package can be loaded.
 
-### Loading a Module
+### Loading Modules
 
-To load a software package:
+To load a particular GCC version:
 
 ```bash
 module load gcc/16.2.0
@@ -252,7 +253,7 @@ Verify the active compiler:
 gcc --version
 ```
 
-To load a package using its configured default version:
+To load the default version of a module:
 
 ```bash
 module load gcc
@@ -260,9 +261,11 @@ module load gcc
 
 The default version may change as the software environment is maintained.
 
-For reproducible builds, explicitly specifying the version is recommended.
+For reproducible builds, specifying the exact module version is preferable.
 
 ### Loading Multiple Modules
+
+Modules can be combined when their software environments are compatible.
 
 For example:
 
@@ -271,60 +274,64 @@ module load gcc/16.2.0
 module load cmake
 ```
 
-Additional scientific libraries can be loaded as needed.
+Additional scientific libraries can then be loaded as required.
 
-Before using a compiler-dependent library, check its prerequisites using `module spider`.
+Before loading compiler-dependent libraries, check their prerequisites using `module spider`.
 
 ### Viewing Loaded Modules
 
-To display the modules currently loaded:
+To list currently loaded modules:
 
 ```bash
 module list
 ```
 
-This helps identify the exact software environment used for building or running an application.
+This is useful when checking which compiler, runtime, and libraries are active.
 
 ### Unloading Modules
 
-To unload an individual module:
+To unload a module:
 
 ```bash
 module unload cmake
 ```
 
-To unload the GCC module:
+To unload a compiler:
 
 ```bash
 module unload gcc
 ```
 
-Lmod normally reverses the environment changes introduced by the unloaded module.
+Lmod ordinarily reverses the environment changes introduced by the module.
 
 ### Switching Compilers
 
-Lmod understands conflicts between software environments.
+Lmod understands relationships and conflicts between software environments.
 
-For example, loading a different compiler may cause Lmod to replace the currently loaded compiler.
+Loading a different compiler may automatically replace the currently loaded compiler and adjust dependent modules.
 
-Dependent modules may be reloaded, unloaded, or reported as incompatible.
+For example:
 
-To explicitly replace one compiler with another:
+```bash
+module load gcc/16.2.0
+```
+
+To explicitly replace GCC with another installed version:
 
 ```bash
 module swap gcc/16.2.0 gcc/14.2.1
 ```
 
-The requested versions must exist and be accessible in the current module hierarchy.
-
-Always inspect the result:
+After switching:
 
 ```bash
 module list
 gcc --version
 ```
 
-Compiler switching does not automatically rebuild previously compiled applications or libraries.
+Some dependent modules may be reloaded automatically, while others may become unavailable.
+
+Switching compiler modules does not recompile software already built with another compiler.
 
 ### Resetting the Environment
 
@@ -334,7 +341,7 @@ To unload all modules:
 module purge
 ```
 
-To restore the site's default module environment:
+To restore the system-defined default environment:
 
 ```bash
 module reset
@@ -342,26 +349,26 @@ module reset
 
 The default environment may contain no loaded modules.
 
-Do not assume that `module reset` automatically loads a particular compiler, application collection, or legacy Rostam configuration.
+Users should not assume that resetting the module environment automatically loads a compiler or predefined Rostam software collection.
 
-Inspect the current state using:
+Inspect the resulting environment:
 
 ```bash
 module list
 ```
 
-### Saving a Module Collection
+### Saving Module Collections
 
-Lmod allows users to save a collection of loaded modules for later use.
+Lmod allows users to save collections of modules for later use.
 
-First, load the software environment you want:
+For example:
 
 ```bash
 module load gcc/16.2.0
 module load cmake
 ```
 
-Save it under a descriptive name:
+Save the current collection:
 
 ```bash
 module save research-gcc16
@@ -373,25 +380,25 @@ List saved collections:
 module savelist
 ```
 
-Restore the collection later:
+Restore a collection:
 
 ```bash
 module restore research-gcc16
 ```
 
-Named module collections are useful when working on multiple projects with different software requirements.
+Saved collections are useful for projects requiring different compiler or dependency environments.
 
-A saved collection refers to module versions and configurations that must remain available. If modules are removed or changed, an old collection may need to be updated.
+A collection references existing modules. If those modules are changed or removed, the collection may need to be updated.
 
 ### Module Help
 
-To display help for a particular module:
+Display information about a particular module:
 
 ```bash
 module help gcc
 ```
 
-To display Lmod help:
+Display Lmod help:
 
 ```bash
 module help
@@ -399,65 +406,65 @@ module help
 
 ### Module Paths
 
-The environment variable `MODULEPATH` determines which module directories Lmod searches.
+Lmod searches directories listed in the `MODULEPATH` environment variable.
 
-To display it:
+Inspect the current search path:
 
 ```bash
 echo "$MODULEPATH"
 ```
 
-On the main x86-64 compute systems, module paths include:
+On the main x86-64 compute environment, module directories include:
 
 ```text
 /opt/apps/modulefiles
 ```
 
-Additional paths include system module directories and Intel oneAPI modulefiles.
+Additional module paths include system directories and Intel oneAPI modulefiles.
 
-The ARM64 and RISC-V environments have architecture-specific differences.
+ARM64 and RISC-V systems have architecture-specific software environments.
 
-Users generally should not need to manually edit `MODULEPATH` to access the administrator-managed software collection.
+For an overview of software available by system, see [Software Availability by System](/en/software/availability).
 
-## Python Environments
+## Python
 
-Python is available throughout Rostam, but the default version depends on the operating system and architecture.
+Python is available across Rostam, although the default version varies by operating system and architecture.
 
-The main AlmaLinux 9.6 compute systems provide Python 3.9 as their default system interpreter.
+The main AlmaLinux 9.6 compute systems provide Python 3.9 as their system interpreter.
 
-Additional Python releases, including Python 3.12 and 3.13, are available through the module system on the main x86-64 environment.
+Additional Python versions, including 3.12 and 3.13, are available in the administrator-managed x86-64 software environment.
 
-The DGX Spark systems use Python 3.12, while the RISC-V systems use Python 3.11 as their system default.
+The DGX Spark systems provide Python 3.12, while the RISC-V systems use Python 3.11 as their system default.
 
 ### Checking Python
 
-To check the active Python version:
+Check the active Python version:
 
 ```bash
 python3 --version
 ```
 
-To identify the interpreter being used:
+Identify the executable:
 
 ```bash
 which python3
 ```
 
-### Loading Another Python Version
+### Selecting a Python Version
 
-Search for available Python modules:
+To discover Python modules:
 
 ```bash
 module spider python
 ```
 
-On the main x86-64 module environment, for example:
+For example, on the main x86-64 environment:
 
 ```bash
 module load python/3.12.3
 ```
 
-Then verify:
+Verify the active interpreter:
 
 ```bash
 python3 --version
@@ -465,11 +472,11 @@ python3 --version
 
 ### Python Virtual Environments
 
-Python virtual environments are recommended for managing project-specific packages.
+Python virtual environments are recommended for managing project-specific libraries.
 
-A virtual environment allows users to install libraries without modifying the operating system's Python environment or interfering with other projects.
+A virtual environment allows users to install packages without modifying the operating-system Python environment or interfering with other projects.
 
-First, choose the appropriate Python interpreter or load a Python module.
+First, select the appropriate Python interpreter.
 
 Create a virtual environment:
 
@@ -483,19 +490,13 @@ Activate it:
 source ~/venvs/myproject/bin/activate
 ```
 
-Check the interpreter:
-
-```bash
-python --version
-```
-
 Install packages:
 
 ```bash
 python -m pip install numpy
 ```
 
-Install multiple packages:
+Or:
 
 ```bash
 python -m pip install numpy scipy matplotlib
@@ -507,45 +508,45 @@ To deactivate:
 deactivate
 ```
 
-The installed packages remain in the virtual environment and can be used again when it is reactivated.
+The environment remains available for subsequent sessions.
 
-### Recording Python Dependencies
+### Managing Dependencies
 
-To record the installed Python packages:
+Record Python dependencies:
 
 ```bash
 python -m pip freeze > requirements.txt
 ```
 
-To recreate the environment later:
+Reinstall them in another compatible environment:
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-Some scientific packages include compiled native libraries and may depend on the system architecture or compiler environment.
+Some Python packages include architecture-specific compiled libraries.
 
-An environment created on an x86-64 node should not be assumed to work unchanged on ARM64 or RISC-V.
+A virtual environment created on x86-64 should not be assumed to work unchanged on ARM64 or RISC-V.
 
-### Installing Packages in Your Home Directory
+### User Package Installations
 
-When virtual environments are not appropriate, Python may support per-user package installations:
+Python can also support packages installed in a user's home directory:
 
 ```bash
 python3 -m pip install --user package-name
 ```
 
-However, user installations can conflict with module-managed Python versions or other environments.
+However, user installations can conflict with module-managed Python environments.
 
-**Virtual environments are preferred for project-specific dependencies.**
+Virtual environments are preferred for project-specific dependencies.
 
-Do not use `sudo pip` to install Python packages into the shared operating-system environment.
+Avoid using `sudo pip` to modify the shared operating-system Python installation.
 
-## Parallel and Distributed Computing Libraries
+## MPI and Parallel Computing
 
-Rostam supports parallel computing through MPI and other communication libraries.
+Rostam supports distributed and parallel computing through MPI and supporting communication libraries.
 
-The main x86-64 software collection includes multiple versions of Open MPI, together with supporting libraries such as:
+The main x86-64 environment provides multiple Open MPI versions and related software, including:
 
 - UCX
 - PMIx
@@ -553,107 +554,107 @@ The main x86-64 software collection includes multiple versions of Open MPI, toge
 - GASNet
 - Intel MPI components
 
-These provide communication, process management, and hardware topology support for distributed applications.
+These libraries support message passing, process management, hardware topology discovery, and high-performance communication.
 
-### Finding MPI Modules
+### Discovering MPI
 
-Search for MPI implementations:
+Search for available MPI modules:
 
 ```bash
 module spider openmpi
 ```
 
-Inspect the requirements for the desired version before loading it.
+Inspect the desired version and its compiler dependencies before loading it.
 
 ### Checking MPI
 
-After loading a suitable MPI environment:
+After loading an appropriate MPI module:
 
 ```bash
 mpicc --version
 ```
 
-To identify the MPI wrapper configuration, where supported:
+For Open MPI, the compiler wrapper configuration can be inspected using:
 
 ```bash
 mpicc --showme
 ```
 
-The MPI compiler wrapper should use the intended compiler and compatible dependencies.
+The selected MPI implementation should use the intended compiler and compatible runtime dependencies.
 
 ### MPI and Slurm
 
-Slurm manages job scheduling and process launch.
+Slurm is responsible for allocating resources and launching computational jobs.
 
-For an MPI application, users should request the necessary resources through Slurm and use the appropriate process-launch method.
+MPI applications must use a compatible process management configuration.
 
-The MPI implementation and Slurm's configured process management interface must be compatible.
+Applications built against one MPI implementation should not be assumed compatible with another.
 
-Applications built using one MPI implementation should not be assumed compatible with another.
+The required job resources should be requested through Slurm before launching computational workloads.
 
 ## Scientific Libraries
 
-The main x86-64 software environment includes a range of scientific and numerical libraries.
+The main x86-64 environment provides numerous scientific and development libraries.
 
-Examples include:
-
-| Category | Software |
+| Category | Examples |
 |---|---|
-| C++ libraries | Boost |
-| Scientific data | HDF5, NetCDF, PnetCDF |
-| Parallel I/O | Parallel NetCDF, PIO |
-| Parallel communication | Open MPI, UCX, PMIx |
-| Performance and topology | hwloc, PAPI, OTF2 |
-| Mathematical and numerical tools | Intel oneAPI components and other installed numerical libraries |
-| Build systems | CMake, GNU Make, Ninja |
+| C++ Libraries | Boost |
+| Scientific Data | HDF5, NetCDF, NetCDF-Fortran |
+| Parallel Data | PnetCDF, PIO |
+| Parallel Computing | Open MPI, UCX, PMIx, GASNet |
+| Numerical Computing | Intel oneMKL and other installed numerical libraries |
+| Performance Analysis | PAPI, LIKWID, OTF2 |
+| Build Tools | CMake, GNU Make, Ninja |
 | Containers | Apptainer |
 
-Different versions may be available depending on the compiler and module environment.
+Different versions may be available depending on the selected compiler and module environment.
 
-For a current software summary, see [Software Availability by System](/software/availability).
+Use `module spider` to discover versions and prerequisites.
+
+See [Software Availability by System](/en/software/availability) for the current per-system summary.
 
 ## GPU Software Environments
 
-Rostam provides NVIDIA and AMD GPU computing systems.
+Rostam provides both NVIDIA and AMD GPU computing resources.
 
-The primary GPU programming environments are:
-
-| Accelerator | Software Ecosystem |
+| Accelerator | Primary Software Ecosystem |
 |---|---|
 | NVIDIA V100 | CUDA |
 | NVIDIA A100 | CUDA |
 | NVIDIA GB10 | CUDA |
 | AMD MI100 | ROCm, HIP |
 
-CUDA and ROCm compatibility depends on the device architecture, GPU driver, toolkit version, compiler, and runtime libraries.
-
-A CUDA or ROCm installation detected on one GPU family should not be assumed compatible with every other GPU family.
+GPU software compatibility depends on the hardware architecture, device drivers, toolkit versions, compilers, and runtime libraries.
 
 ### NVIDIA CUDA
 
-CUDA modules can be discovered using:
+CUDA provides development and runtime support for NVIDIA GPU applications.
+
+To discover available CUDA modules:
 
 ```bash
 module spider cuda
 ```
 
-After loading an appropriate CUDA module, users can inspect the toolkit version:
+After loading a compatible toolkit, inspect the CUDA compiler:
 
 ```bash
 nvcc --version
 ```
 
-The NVIDIA GPU driver can be inspected using:
+To inspect the NVIDIA driver and installed GPU:
 
 ```bash
 nvidia-smi
 ```
 
-The CUDA version reported by `nvidia-smi` represents the driver-supported CUDA API level, not necessarily the version of the installed CUDA compiler.
+The CUDA version reported by `nvidia-smi` indicates the CUDA API compatibility level supported by the installed driver.
+
+It does not necessarily identify the version of the CUDA toolkit currently selected through Lmod.
 
 ### AMD ROCm
 
-ROCm provides GPU runtime and programming support for AMD accelerators.
+ROCm provides development and runtime support for AMD GPUs.
 
 On Kamand, GPU information can be inspected using:
 
@@ -661,91 +662,86 @@ On Kamand, GPU information can be inspected using:
 rocm-smi
 ```
 
-Users can discover available ROCm modules with:
+Search for available ROCm modules:
 
 ```bash
 module spider rocm
 ```
 
-Availability of individual ROCm components depends on the node's software installation.
+ROCm and HIP application compatibility depends on the supported accelerator architecture and installed software environment.
 
-### GPU Software Compatibility
+### GPU Compiler Compatibility
+
+GPU development toolkits may support only specific host compiler versions.
 
 Users should verify:
 
-- GPU architecture.
-- Installed device driver.
-- CUDA or ROCm toolkit version.
-- Compiler compatibility.
-- Required runtime libraries.
-- Application target architecture.
+- The installed GPU driver.
+- The selected CUDA or ROCm toolkit.
+- The required host compiler.
+- GPU architecture compatibility.
+- Runtime and scientific library dependencies.
 
-For detailed GPU hardware and scheduling instructions, see [Rostam Hardware](/cluster/hardware).
+Loading a newer GCC module does not guarantee compatibility with a particular CUDA or ROCm release.
+
+See [Rostam Hardware](/en/cluster/hardware) for hardware and accelerator information.
 
 ## Containers
 
-Rostam provides Apptainer on the main x86-64 compute environment.
+Apptainer is available on the main x86-64 compute environment.
 
 Apptainer enables users to run applications within containerized software environments while integrating with the host operating system and HPC infrastructure.
 
-Check the installed version with:
+To check the installed version:
 
 ```bash
 apptainer --version
 ```
 
-Containers can help reproduce application environments, but they do not eliminate CPU architecture or GPU driver compatibility requirements.
+Containers can improve portability and reproducibility, but they do not eliminate architecture compatibility requirements.
 
-For example, an x86-64 container cannot ordinarily execute directly on ARM64 or RISC-V hardware without additional compatibility mechanisms.
+For example, an x86-64 container cannot ordinarily execute natively on ARM64 or RISC-V hardware.
 
-GPU-enabled containers must also be compatible with the host's accelerator runtime and device drivers.
+GPU-enabled containers must also be compatible with the host's GPU driver and runtime environment.
 
 ## Reproducible Software Environments
 
-Rostam encourages users to record the software environment associated with important computational results.
+Rostam encourages users to record the software environment associated with computational experiments and important research results.
 
-This includes:
+Relevant information includes:
 
-- Operating system and processor architecture.
+- Operating system and architecture.
 - Compiler version.
 - Loaded environment modules.
 - MPI implementation.
-- Numerical library versions.
+- Numerical libraries.
 - Python dependencies.
-- CUDA or ROCm versions when applicable.
-- Slurm job settings.
+- CUDA or ROCm versions.
+- Slurm job configuration.
 
-### Recording Loaded Modules
+### Recording Modules
 
-Within a Slurm job script, the current module environment can be recorded using:
+List the current modules:
 
 ```bash
 module list
 ```
 
-To capture it in a separate file:
+Save the module list to a file:
 
 ```bash
 module list 2> modules-used.txt
 ```
 
-The output can help reproduce the environment or diagnose application failures.
-
 ### Recording Compiler Versions
 
 ```bash
 gcc --version
-```
-
-```bash
 g++ --version
-```
-
-```bash
 python3 --version
 ```
 
-### Recording the Host Environment
+### Recording System Information
 
 ```bash
 hostname
@@ -753,7 +749,7 @@ uname -m
 cat /etc/os-release
 ```
 
-### Recording Slurm Job Information
+### Recording Slurm Information
 
 Within an allocated job:
 
@@ -761,25 +757,41 @@ Within an allocated job:
 scontrol show job "$SLURM_JOB_ID"
 ```
 
-Keeping this information with research results helps maintain reproducibility across compiler updates, operating-system changes, and different computing architectures.
+This information can help reproduce results, investigate application failures, and understand differences between computing environments.
 
-## Software Availability and Documentation
+## Software Availability
 
-Rostam's software environment evolves as compilers, libraries, operating systems, and research requirements change.
+The Rostam software environment evolves as new compilers, libraries, operating systems, and research requirements are introduced.
 
-The hardware architecture and installed software available on a particular system may differ from those on another system.
+Installed software and module availability may differ between node families and processor architectures.
 
-Before beginning a new project, users should consult:
+For a concise inventory of current software, see:
 
-- [Software Availability by System](/software/availability) — Software inventory by node family.
-- [Rostam Hardware Inventory](/cluster/hardware) — Available computing architectures and accelerators.
-- [Accessing Rostam](/ssh) — SSH access and getting started.
-- [Advanced SSH Configuration](/ssh/advanced_ssh) — SSH keys and compute-node access.
+**[Software Availability by System](/en/software/availability)**
 
-For detailed module information, use `module spider` on the target environment.
+The availability page summarizes:
 
-### Software Inventory
+- Operating systems and architectures.
+- System and module-managed compilers.
+- Python versions.
+- MPI implementations.
+- Scientific libraries.
+- NVIDIA CUDA and AMD ROCm environments.
+- Architecture-specific software.
 
-The software inventory was last surveyed on October 9, 2026.
+For the most current module information, use `module spider` on the system where the application will run.
 
-The inventory describes installed and discoverable software at the time of the survey. Module compatibility and current availability should always be verified on the system where the application will run.
+## Additional Documentation
+
+- [Software Availability by System](/en/software/availability)
+- [Rostam Hardware Inventory](/en/cluster/hardware)
+- [Accessing Rostam](/en/ssh)
+- [Advanced SSH Configuration](/en/ssh/advanced_ssh)
+- [Lmod Documentation](https://lmod.readthedocs.io/)
+- [Slurm Workload Manager](https://slurm.schedmd.com/documentation.html)
+- [NVIDIA CUDA Documentation](https://docs.nvidia.com/cuda/)
+- [AMD ROCm Documentation](https://rocm.docs.amd.com/)
+
+---
+
+*Software environment information last reviewed against the Rostam software survey of October 9, 2026.*
