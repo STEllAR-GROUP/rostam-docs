@@ -2,7 +2,7 @@
 title: CUDA Programming
 description: 
 published: true
-date: 2026-09-30T18:15:38.913Z
+date: 2026-10-09T21:34:42.880Z
 tags: 
 editor: markdown
 dateCreated: 2023-07-13T17:39:39.607Z
@@ -16,15 +16,18 @@ Rostam provides several NVIDIA and AMD GPU systems for accelerator and GPU progr
 
 Current GPU-capable systems include:
 
-|System|Accelerator|Count per node|Slurm partition(s)|
-|---|---|---:|---|
-|Anvil|NVIDIA A100|8|`cuda`, `DGX-A100`|
-|Nasrin|NVIDIA A100|2|`cuda`, `cuda-A100`, `cuda-A100-amd`|
-|Toranj|NVIDIA A100|4|`cuda`, `cuda-A100`, `cuda-A100-intel`|
-|Diablo|NVIDIA V100|4|`cuda`, `cuda-V100`|
-|Bahram|NVIDIA V100|2|`cuda`, `cuda-V100`|
-|Kamand|AMD MI100|2|`mi100`|
-|Spark|NVIDIA GB10|1|`spark`|
+
+| System | Accelerator | Nodes | GPUs/node | Total GPUs | Slurm partition(s) |
+|---|---|---:|---:|---:|---|
+| Anvil | NVIDIA A100 | — | 8 | — | `cuda`, `DGX-A100` |
+| Nasrin | NVIDIA A100 | — | 2 | — | `cuda`, `cuda-A100`, `cuda-A100-amd` |
+| Toranj | NVIDIA A100 | — | 4 | — | `cuda`, `cuda-A100`, `cuda-A100-intel` |
+| Diablo | NVIDIA V100 | — | 4 | — | `cuda`, `cuda-V100` |
+| Bahram | NVIDIA V100 | — | 2 | — | `cuda`, `cuda-V100` |
+| Kamand | AMD MI100 | — | 2 | — | `mi100` |
+| Spark | NVIDIA GB10 | 4 | 1 | 4 | `spark` |
+
+**NVIDIA DGX Spark:** Rostam includes four interconnected NVIDIA DGX Spark systems, each equipped with one NVIDIA GB10 Grace Blackwell Superchip and 128 GB of unified system memory. Together, these provide four GB10 accelerators across four physical systems. The systems support distributed workloads through their high-speed interconnect but are scheduled as separate nodes through Slurm.
 
 Additional specialized partitions may exist for automated testing or administrative workloads.
 
