@@ -1,8 +1,8 @@
 ---
-title: Advaced SSH Configuration
+title: Advanced SSH Configuration
 description: 
 published: true
-date: 2026-10-09T23:51:52.833Z
+date: 2026-10-09T23:54:44.529Z
 tags: 
 editor: markdown
 dateCreated: 2023-07-13T17:39:55.721Z
