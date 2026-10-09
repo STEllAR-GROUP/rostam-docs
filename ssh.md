@@ -2,7 +2,7 @@
 title: Connecting to Rostam
 description: How to connect to Rostam via ssh
 published: true
-date: 2026-10-09T19:20:33.799Z
+date: 2026-10-09T19:23:39.571Z
 tags: 
 editor: markdown
 dateCreated: 2023-07-13T17:39:37.371Z
@@ -304,115 +304,739 @@ This requests an interactive shell within a Slurm allocation, subject to partiti
 
 For more information about the cluster's computing resources, consult the [Rostam Hardware Inventory](/cluster/hardware).
 
-## Transferring Files
 
-SSH supports encrypted file transfers between your local computer and Rostam.
+## Transferring Files To and From Rostam
 
-The most common methods are:
+Rostam supports secure file transfers using the SSH protocol. Users can upload source code, input datasets, scripts, and other files to the cluster, as well as download computational results and output files to their local computers.
 
-- `scp` — Securely copy files and directories.
-- `sftp` — Interactive or graphical file transfers.
-- `rsync` — Synchronize files and directories efficiently over SSH.
+File transfers can be performed using command-line utilities or graphical applications, depending on your operating system and preferences.
 
-### Using SCP
+All file transfers should use encrypted protocols such as **SFTP, SCP, or rsync over SSH**. Unencrypted FTP is not recommended.
 
-To copy a file from your local computer to your Rostam home directory:
+The connection information is:
+
+| Setting | Value |
+|---|---|
+| Hostname | `rostam.cct.lsu.edu` |
+| Port | `22` |
+| Protocol | SFTP or SCP |
+| Username | Your Rostam username |
+| Authentication | Your configured SSH authentication method |
+
+> **Important:** File transfers must comply with Rostam's authentication requirements, including two-factor authentication where applicable. Some graphical clients may require additional configuration to support interactive authentication.
+
+### Choosing a File Transfer Method
+
+Several tools are available for transferring files between your computer and Rostam.
+
+| Tool | Interface | Operating Systems | Recommended Use |
+|---|---|---|---|
+| SCP | Command line | Linux, macOS, Windows | Simple file and directory copies |
+| SFTP | Command line | Linux, macOS, Windows | Interactive file transfers |
+| rsync | Command line | Linux, macOS, Windows with WSL or rsync installed | Large directories and repeated synchronization |
+| WinSCP | Graphical | Windows | General-purpose file management and transfers |
+| MobaXterm | Graphical | Windows | Integrated SSH terminal and file transfers |
+| FileZilla | Graphical | Linux, macOS, Windows | Cross-platform drag-and-drop transfers |
+| Cyberduck | Graphical | macOS, Windows | Simple graphical file transfers |
+| Bitvise SSH Client | Graphical | Windows | Integrated SSH and SFTP |
+| Termius | Graphical | Linux, macOS, Windows | SSH session management and supported SFTP workflows |
+
+For occasional transfers, SCP or SFTP is usually sufficient. For users who prefer working with graphical applications, WinSCP and MobaXterm are particularly convenient on Windows.
+
+For recurring transfers involving large directories, rsync is generally more efficient.
+
+## Command-Line File Transfers
+
+Linux and macOS normally provide OpenSSH file transfer tools as part of their standard software environments.
+
+Modern Windows systems can also use these tools through PowerShell or Windows Terminal.
+
+Commands in the following examples are executed **on your local computer**, unless otherwise indicated.
+
+Replace `myuser` with your Rostam username.
+
+### SCP: Secure Copy
+
+The `scp` command securely copies files between local and remote systems.
+
+Its basic syntax is:
+
+```bash
+scp source destination
+```
+
+A remote location is specified using:
+
+```text
+username@hostname:path
+```
+
+#### Upload a File to Rostam
+
+To upload `myfile.txt` from your local computer to your Rostam home directory:
 
 ```bash
 scp myfile.txt myuser@rostam.cct.lsu.edu:~/
 ```
 
-To copy a file from Rostam to your local computer:
+To place the file in a particular directory:
+
+```bash
+scp myfile.txt \
+    myuser@rostam.cct.lsu.edu:~/project/
+```
+
+The destination directory must already exist.
+
+#### Download a File from Rostam
+
+To download `results.txt` from your Rostam home directory:
 
 ```bash
 scp myuser@rostam.cct.lsu.edu:~/results.txt .
 ```
 
-The final `.` means the current local directory.
+The final `.` refers to the current local directory.
 
-To recursively copy a directory to Rostam:
+To save it under a different local filename:
 
 ```bash
-scp -r myproject/ myuser@rostam.cct.lsu.edu:~/
+scp myuser@rostam.cct.lsu.edu:~/results.txt \
+    local-results.txt
 ```
 
-These commands can be used from Linux, macOS, and Windows PowerShell when OpenSSH is installed.
+#### Transfer an Entire Directory
 
-### Using SFTP
+Use the `-r` option to recursively copy a directory.
 
-To start an interactive SFTP session:
+Upload a directory:
+
+```bash
+scp -r myproject/ \
+    myuser@rostam.cct.lsu.edu:~/
+```
+
+Download a directory:
+
+```bash
+scp -r myuser@rostam.cct.lsu.edu:~/results/ \
+    ./results/
+```
+
+For directories containing many files, rsync may be a better choice.
+
+#### Transfer Multiple Files
+
+Several files can be uploaded in one command:
+
+```bash
+scp input.dat config.txt job.sh \
+    myuser@rostam.cct.lsu.edu:~/project/
+```
+
+#### SCP on Windows PowerShell
+
+The same commands work in Windows PowerShell when OpenSSH is installed.
+
+For example, upload a file from your Downloads folder:
+
+```powershell
+scp "$HOME\Downloads\input.dat" myuser@rostam.cct.lsu.edu:~/
+```
+
+Download results to your Desktop:
+
+```powershell
+scp myuser@rostam.cct.lsu.edu:~/results.dat "$HOME\Desktop\"
+```
+
+Windows paths containing spaces should be enclosed in quotation marks.
+
+### SFTP: Secure File Transfer Protocol
+
+SFTP provides an interactive environment for browsing directories, uploading files, and downloading results.
+
+To connect:
 
 ```bash
 sftp myuser@rostam.cct.lsu.edu
 ```
 
-Useful commands include:
+After authenticating, you will see a prompt similar to:
 
-| Command | Purpose |
+```text
+sftp>
+```
+
+SFTP supports commands for working with both local and remote directories.
+
+| Command | Description |
 |---|---|
+| `pwd` | Display current remote directory |
+| `lpwd` | Display current local directory |
 | `ls` | List remote files |
-| `pwd` | Show current remote directory |
-| `lpwd` | Show current local directory |
-| `cd` | Change remote directory |
-| `lcd` | Change local directory |
-| `put file.txt` | Upload a file |
-| `get file.txt` | Download a file |
-| `mkdir name` | Create a remote directory |
-| `bye` | End the SFTP session |
+| `lls` | List local files |
+| `cd directory` | Change remote directory |
+| `lcd directory` | Change local directory |
+| `mkdir directory` | Create remote directory |
+| `put file` | Upload a file |
+| `get file` | Download a file |
+| `put -r directory` | Upload a directory recursively |
+| `get -r directory` | Download a directory recursively |
+| `bye` | Disconnect |
 
-For example:
+#### Example SFTP Session
+
+Connect:
+
+```bash
+sftp myuser@rostam.cct.lsu.edu
+```
+
+Inspect your remote directory:
+
+```text
+sftp> pwd
+sftp> ls
+```
+
+Change the remote working directory:
+
+```text
+sftp> cd project
+```
+
+Upload an input file:
 
 ```text
 sftp> put input.dat
-sftp> get results.dat
+```
+
+Download a result file:
+
+```text
+sftp> get output.dat
+```
+
+Disconnect:
+
+```text
 sftp> bye
 ```
 
-### Graphical File Transfers
+SFTP is useful when several transfers must be performed during one session without repeatedly reconnecting.
 
-Users who prefer a graphical interface can use:
+### rsync: Efficient Directory Synchronization
 
-- [WinSCP](https://winscp.net/) — Popular Windows SFTP and SCP client.
-- [FileZilla](https://filezilla-project.org/) — Cross-platform file transfer application supporting SFTP.
-- [Cyberduck](https://cyberduck.io/) — Graphical file transfer client for Windows and macOS.
-- MobaXterm — Integrated SFTP file browser.
-- Bitvise SSH Client — Integrated graphical file transfer.
+The `rsync` utility is useful for transferring large directory structures or synchronizing files that change over time.
 
-Configure the application to use:
+Unlike a simple copy operation, rsync can compare source and destination files and avoid retransmitting unchanged data.
 
-```text
-Protocol: SFTP
-Host: rostam.cct.lsu.edu
-Port: 22
-Username: your Rostam username
-```
+This makes it especially useful for research projects involving recurring transfers of input data, source code, and computational results.
 
-Use the authentication method required for your account.
-
-### Using rsync
-
-For large projects or directories that change frequently, `rsync` can be more efficient than repeatedly copying everything with `scp`.
-
-For example:
+#### Upload a Project Directory
 
 ```bash
 rsync -avh myproject/ \
     myuser@rostam.cct.lsu.edu:~/myproject/
 ```
 
-To copy results back to your local computer:
+The options are:
+
+| Option | Description |
+|---|---|
+| `-a` | Archive mode, preserving directory structure and file metadata where supported |
+| `-v` | Verbose output |
+| `-h` | Human-readable sizes |
+| `--progress` | Display transfer progress |
+| `--partial` | Retain partially transferred files |
+
+For a transfer that may be interrupted:
 
 ```bash
-rsync -avh \
+rsync -avh --progress --partial \
+    myproject/ \
+    myuser@rostam.cct.lsu.edu:~/myproject/
+```
+
+#### Download Computational Results
+
+```bash
+rsync -avh --progress \
     myuser@rostam.cct.lsu.edu:~/results/ \
     ./results/
 ```
 
-`rsync` generally transfers only the differences between existing source and destination files, making it useful for recurring transfers.
+When repeated, rsync generally transfers only files that need updating.
 
-It must be available on both systems.
+#### Preview Changes Before Transferring
 
-> **Note:** Large datasets and substantial file transfers should follow the cluster's storage and data transfer policies. Avoid unnecessary transfers through shared login infrastructure.
+Use `--dry-run` to preview the operation:
+
+```bash
+rsync -avhn myproject/ \
+    myuser@rostam.cct.lsu.edu:~/myproject/
+```
+
+This displays the proposed file operations without actually transferring data.
+
+#### Understanding Trailing Slashes
+
+With rsync, trailing slashes affect how directories are copied.
+
+```bash
+rsync -avh myproject/ destination/
+```
+
+Copies the **contents** of `myproject` into `destination`.
+
+```bash
+rsync -avh myproject destination/
+```
+
+Copies the `myproject` directory itself into `destination`.
+
+> **Caution:** rsync supports options such as `--delete` that can remove files from the destination. Users should understand these options and test unfamiliar synchronization commands with `--dry-run` before using them.
+
+#### rsync on Windows
+
+Windows users can run rsync through the Windows Subsystem for Linux (WSL), provided rsync is installed in the Linux environment.
+
+For example, a file in:
+
+```text
+C:\Users\myuser\Documents\project
+```
+
+may be accessible within WSL as:
+
+```text
+/mnt/c/Users/myuser/Documents/project
+```
+
+The transfer command would be:
+
+```bash
+rsync -avh \
+    /mnt/c/Users/myuser/Documents/project/ \
+    myuser@rostam.cct.lsu.edu:~/project/
+```
+
+WSL provides a useful Linux-compatible environment for Windows users performing command-line file management and software development.
+
+## Graphical File Transfers
+
+Graphical file transfer applications provide a convenient way to browse Rostam directories and transfer files without using command-line utilities.
+
+Most support drag-and-drop operations and provide separate views of your local and remote filesystems.
+
+Use **SFTP over SSH** when configuring these applications.
+
+### WinSCP (Windows)
+
+[WinSCP](https://winscp.net/) is a free Windows file transfer application supporting SFTP and SCP.
+
+It is particularly useful for users who want a graphical file manager for Rostam.
+
+<https://winscp.net/>
+
+#### Connecting with WinSCP
+
+1. Download and install WinSCP.
+2. Launch the application.
+3. Select **New Site**.
+4. Configure the connection:
+
+   - File protocol: `SFTP`
+   - Host name: `rostam.cct.lsu.edu`
+   - Port number: `22`
+   - User name: your Rostam username
+
+5. Click **Login**.
+6. Verify the server's SSH host key fingerprint when prompted.
+7. Complete the required authentication steps.
+
+WinSCP may allow the connection to be saved as a site profile for future use.
+
+#### Transferring Files
+
+WinSCP can display local and remote directories side by side.
+
+Files can be uploaded or downloaded by:
+
+- Dragging files between directories.
+- Using the Upload or Download commands.
+- Copying multiple selected files.
+- Synchronizing directories.
+
+WinSCP also supports resume and transfer queue features for supported operations.
+
+#### Editing Remote Files
+
+WinSCP includes file editing capabilities.
+
+A remote text file can be opened in an editor, modified, and saved back to Rostam.
+
+This is convenient for editing small configuration files and Slurm job scripts.
+
+For larger software projects, a dedicated development environment may be more appropriate.
+
+### MobaXterm (Windows)
+
+[MobaXterm](https://mobaxterm.mobatek.net/) combines SSH terminal access with an integrated graphical SFTP browser.
+
+For many Windows HPC users, it provides a convenient all-in-one environment.
+
+#### Connecting with MobaXterm
+
+1. Open MobaXterm.
+2. Select **Session**.
+3. Choose **SSH**.
+4. Enter `rostam.cct.lsu.edu`.
+5. Specify your Rostam username.
+6. Leave the SSH port at `22`.
+7. Open the session and complete authentication.
+
+#### Using the SFTP Browser
+
+When an SSH session is established, MobaXterm can display a remote SFTP file browser beside the terminal.
+
+This allows users to:
+
+- Browse directories on Rostam.
+- Upload local files.
+- Download remote files.
+- Create and rename directories.
+- Edit supported remote text files.
+- Transfer files using drag-and-drop.
+
+The remote file browser operates over SFTP, while the terminal provides command-line access to the same system.
+
+A separate file transfer connection may be necessary depending on client configuration and authentication behavior.
+
+#### Advantages for HPC Users
+
+MobaXterm provides several capabilities in a single application:
+
+- SSH connections.
+- SFTP file transfers.
+- Multiple terminal sessions.
+- X11 forwarding.
+- SSH key management.
+- Saved connection profiles.
+
+It is a convenient option for users who regularly work with both terminal commands and graphical file transfers.
+
+### FileZilla (Linux, macOS, Windows)
+
+[FileZilla](https://filezilla-project.org/) is a cross-platform graphical file transfer application supporting SFTP.
+
+It is a useful option for users who work on different operating systems and prefer the same interface on each.
+
+#### Connecting with FileZilla
+
+1. Install FileZilla Client.
+2. Open **File → Site Manager**.
+3. Create a new site.
+4. Configure:
+
+   - Protocol: `SFTP - SSH File Transfer Protocol`
+   - Host: `rostam.cct.lsu.edu`
+   - Port: `22`
+   - Logon Type: an authentication method supported by your Rostam account
+   - User: your Rostam username
+
+5. Connect and verify the server's host key.
+6. Complete authentication.
+
+Some authentication workflows, particularly those involving two-factor authentication, may require additional configuration or may not be supported by every FileZilla version.
+
+#### Transferring Files
+
+FileZilla provides separate local and remote directory browsers.
+
+Users can:
+
+- Drag files between systems.
+- Queue multiple transfers.
+- Transfer directories recursively.
+- View transfer progress.
+- Resume supported interrupted transfers.
+- Manage remote directories.
+
+FileZilla is useful for occasional and moderately sized file transfers.
+
+### Cyberduck (macOS and Windows)
+
+[Cyberduck](https://cyberduck.io/) is a graphical file transfer application for macOS and Windows.
+
+It provides a straightforward interface for working with remote files.
+
+#### Connecting with Cyberduck
+
+1. Install and open Cyberduck.
+2. Select **Open Connection**.
+3. Choose **SFTP (SSH File Transfer Protocol)**.
+4. Enter:
+
+   - Server: `rostam.cct.lsu.edu`
+   - Port: `22`
+   - Username: your Rostam username
+
+5. Connect and verify the server identity.
+6. Complete authentication.
+
+Cyberduck supports bookmarks for frequently used connections.
+
+#### Transferring Files
+
+Users can upload or download files using the graphical browser.
+
+Cyberduck also supports remote file editing through compatible local editors and provides transfer progress information.
+
+It is particularly convenient for macOS users who prefer a native graphical application.
+
+### Other Graphical Clients
+
+Additional file transfer applications include:
+
+| Application | Platform | Description |
+|---|---|---|
+| [Bitvise SSH Client](https://www.bitvise.com/ssh-client) | Windows | Integrated SSH terminal and graphical SFTP |
+| [SecureFX](https://www.vandyke.com/products/securefx/) | Windows, macOS, Linux | Commercial file transfer client with advanced session management |
+| [Termius](https://termius.com/) | Multiple platforms | SSH client with file transfer features on supported plans and platforms |
+| [Transmit](https://panic.com/transmit/) | macOS | Commercial file transfer application with SFTP support |
+
+Users may choose whichever client best suits their operating system and workflow, provided it supports Rostam's SSH authentication requirements.
+
+## File Transfers with Visual Studio Code
+
+[Visual Studio Code](https://code.visualstudio.com/) provides a remote development environment through its **Remote - SSH** extension.
+
+Rather than manually copying files back and forth, users can open and edit files on Rostam through a local VS Code window.
+
+This can be useful for:
+
+- Editing source code.
+- Managing Slurm job scripts.
+- Browsing project directories.
+- Working with version-controlled projects.
+- Performing lightweight remote development.
+
+The extension is available for Windows, macOS, and Linux.
+
+### Connecting with Remote - SSH
+
+1. Install Visual Studio Code.
+2. Install the **Remote - SSH** extension.
+3. Open the Command Palette.
+4. Select **Remote-SSH: Connect to Host**.
+5. Enter:
+
+```text
+myuser@rostam.cct.lsu.edu
+```
+
+6. Complete SSH authentication.
+
+Remote - SSH requires a compatible remote environment and installs remote-side components. Its use may be subject to cluster policies and software compatibility.
+
+VS Code remote development should not be used to run resource-intensive computational workloads on login nodes.
+
+Such work must be submitted through Slurm.
+
+## Large Datasets and Long-Running Transfers
+
+Scientific applications may generate substantial amounts of output, including simulation data, checkpoint files, and visualization products.
+
+For large transfers, several considerations can improve reliability and performance.
+
+### Prefer rsync for Repeated Transfers
+
+When copying a directory that is updated regularly, rsync can avoid retransmitting unchanged files.
+
+For example:
+
+```bash
+rsync -avh --progress --partial \
+    myuser@rostam.cct.lsu.edu:~/simulation-output/ \
+    ./simulation-output/
+```
+
+If a transfer is interrupted, running the command again can avoid retransferring files that are already complete.
+
+### Consider File Counts
+
+Directories containing hundreds of thousands of small files can be expensive to traverse and transfer.
+
+For large collections of small files, creating an archive may reduce filesystem overhead.
+
+For example, on Rostam:
+
+```bash
+tar -czf results.tar.gz results/
+```
+
+Then download the archive from your local computer:
+
+```bash
+scp myuser@rostam.cct.lsu.edu:~/results.tar.gz .
+```
+
+Extract it locally:
+
+```bash
+tar -xzf results.tar.gz
+```
+
+Compression is not always beneficial, particularly for data that is already compressed or difficult to compress.
+
+### Avoid Unnecessary Transfers
+
+For large datasets, consider whether the data can be analyzed or reduced on Rostam before transferring it.
+
+For example, it may be more efficient to download selected results, summaries, or derived products rather than copying every intermediate output file.
+
+### Use Appropriate Storage Locations
+
+Rostam may provide different storage locations for home directories, applications, and computational data.
+
+Users should consult the cluster's storage documentation before placing large datasets in their home directories.
+
+Temporary and scratch storage may have different retention and backup policies.
+
+> **Important:** Large transfers and intensive filesystem operations should comply with cluster policies. Dedicated data-transfer services, if provided, should be preferred for workloads that would otherwise place significant load on the login nodes.
+
+## File Transfer Troubleshooting
+
+### Permission Denied
+
+If a transfer reports:
+
+```text
+Permission denied
+```
+
+Check that:
+
+- Your Rostam account is active.
+- The username is correct.
+- Authentication completed successfully.
+- You have permission to read the source file.
+- You have permission to write to the destination directory.
+
+Linux file permissions can be inspected with:
+
+```bash
+ls -l filename
+```
+
+Directory permissions can be examined using:
+
+```bash
+ls -ld directory
+```
+
+### No Such File or Directory
+
+An error such as:
+
+```text
+No such file or directory
+```
+
+usually indicates that a source or destination path is incorrect.
+
+Remember that local and remote paths are different.
+
+For example:
+
+```bash
+scp myuser@rostam.cct.lsu.edu:~/results.txt .
+```
+
+downloads a remote file, while:
+
+```bash
+scp results.txt myuser@rostam.cct.lsu.edu:~/
+```
+
+uploads a local file.
+
+### Connection Timed Out
+
+If the client cannot connect, verify:
+
+- Hostname: `rostam.cct.lsu.edu`
+- Port: `22`
+- Protocol: SFTP or SCP
+- Network connectivity
+- Any VPN or institutional network requirements
+
+A connection timeout is different from an authentication failure.
+
+### Two-Factor Authentication Problems
+
+Some graphical applications do not handle interactive authentication in the same manner as a terminal-based SSH client.
+
+If an application fails to complete authentication:
+
+1. Verify that ordinary SSH access works.
+2. Confirm that the file transfer application supports the required authentication methods.
+3. Check whether the application supports keyboard-interactive authentication.
+4. Try a current version of the client.
+5. Consult the [Two-Factor Authentication Setup](/ssh/otp) documentation.
+
+Do not disable host key verification or two-factor authentication as a workaround.
+
+### Interrupted Transfers
+
+For recurring or interrupted transfers, rsync is generally preferable to repeatedly copying an entire directory.
+
+For graphical clients, check whether the application supports resuming transfers and preserving partially downloaded files.
+
+### Disk Space and Quotas
+
+Transfers may fail if the destination filesystem is full or a storage quota has been reached.
+
+On Rostam, available space can be inspected with:
+
+```bash
+df -h
+```
+
+This reports filesystem capacity but may not reflect individual user quotas.
+
+Check storage documentation for applicable quota commands and policies.
+
+## File Transfer Security
+
+File transfers should follow the same security practices as interactive SSH access.
+
+- Use encrypted transfer protocols.
+- Verify SSH host keys before accepting them.
+- Protect private SSH keys with appropriate permissions and passphrases.
+- Do not share passwords or one-time authentication codes.
+- Avoid storing credentials in scripts or unprotected configuration files.
+- Use trusted software obtained from official sources.
+- Disconnect sessions when they are no longer needed.
+
+SSH authentication and file transfer authentication are related, but individual applications may support different methods and features.
+
+## Additional File Transfer Resources
+
+- [OpenSSH](https://www.openssh.com/)
+- [OpenSSH SCP Manual](https://man.openbsd.org/scp)
+- [OpenSSH SFTP Manual](https://man.openbsd.org/sftp)
+- [rsync Documentation](https://rsync.samba.org/documentation.html)
+- [WinSCP](https://winscp.net/)
+- [MobaXterm](https://mobaxterm.mobatek.net/)
+- [FileZilla](https://filezilla-project.org/)
+- [Cyberduck](https://cyberduck.io/)
+- [Bitvise SSH Client](https://www.bitvise.com/ssh-client)
+- [Visual Studio Code Remote - SSH](https://code.visualstudio.com/docs/remote/ssh)
+- [Two-Factor Authentication Setup](/ssh/otp)
+- [Advanced SSH Configuration](/ssh/advanced_ssh)
 
 ## Connecting with X11 Forwarding
 
